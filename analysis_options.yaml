@@ -1,0 +1,12 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - 'example/**'
+
+linter:
+  rules:
+    # relaxed to keep parity with engine conventions
+    constant_identifier_names: false
+    avoid_dynamic_calls: false
+    public_member_api_docs: false

@@ -1,0 +1,27 @@
+name: coflui
+description: >-
+  Coflui — a standalone Flutter UI package. Combines a dynamic, JSON-driven
+  widget renderer (Server-Driven UI) with a set of native Flutter UI widgets
+  (CofluiText, CofluiButton, …). State-management agnostic (built on
+  ChangeNotifier + native Flutter), responsive across mobile / tablet / desktop.
+version: 0.1.0
+homepage: https://github.com/codecoradev/coflui
+repository: https://github.com/codecoradev/coflui
+issue_tracker: https://github.com/codecoradev/coflui/issues
+
+environment:
+  sdk: '>=3.5.0 <4.0.0'
+  flutter: '>=1.17.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  gap: ^3.0.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
