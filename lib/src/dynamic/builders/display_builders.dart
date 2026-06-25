@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 class DisplayBuilders {
   DisplayBuilders._();
 
+  /// Builds a [CofluiText] from a JSON `text` component.
+  /// Uses `value` if present, otherwise falls back to `label`.
   static Widget text(BuildContext ctx, UIComponent c, _) {
     final s = c.style;
     final body =
@@ -29,6 +31,8 @@ class DisplayBuilders {
     );
   }
 
+  /// Builds a bold, larger [CofluiText] from a JSON `heading` (or `title`)
+  /// component.
   static Widget heading(BuildContext ctx, UIComponent c, _) {
     final merged = c.style.copyWith(UIStyle(
       fontSize: CofluiTypography.sectionTitle,
@@ -55,6 +59,8 @@ class DisplayBuilders {
     );
   }
 
+  /// Builds a horizontal [Divider] from a JSON `divider` component.
+  /// `style.gap` controls the height; `style.borderWidth` controls thickness.
   static Widget divider(BuildContext ctx, UIComponent c, _) {
     final s = c.style;
     return Divider(

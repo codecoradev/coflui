@@ -80,6 +80,7 @@ class UIStyle {
     this.widthFactor,
   });
 
+  /// A sentinel instance with all fields null — used as a default / fallback.
   static const empty = UIStyle();
 
   factory UIStyle.fromJson(dynamic j) {

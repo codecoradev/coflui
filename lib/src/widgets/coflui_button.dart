@@ -100,14 +100,20 @@ class CofluiButton extends StatelessWidget {
 
   Widget _content(Color foreground) {
     final text = label ?? '';
+    final style = TextStyle(
+      fontSize: CofluiTypography.itemTitle,
+      fontWeight: FontWeight.w600,
+      color: foreground,
+    );
+    // Label di-bungkus Flexible + ellipsis supaya tombol yang sempit tidak
+    // pernah meluber (RenderFlex overflow). Ikon tetap ukuran tetap; teks
+    // yang menyusut/memotong dengan graceful ellipsis ("Kirim Pengu…").
     if (icon == null) {
       return Text(
         text,
-        style: TextStyle(
-          fontSize: CofluiTypography.itemTitle,
-          fontWeight: FontWeight.w600,
-          color: foreground,
-        ),
+        style: style,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
       );
     }
     return Row(
@@ -115,12 +121,12 @@ class CofluiButton extends StatelessWidget {
       children: [
         Icon(icon, size: 18, color: foreground),
         const SizedBox(width: 8),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: CofluiTypography.itemTitle,
-            fontWeight: FontWeight.w600,
-            color: foreground,
+        Flexible(
+          child: Text(
+            text,
+            style: style,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
           ),
         ),
       ],

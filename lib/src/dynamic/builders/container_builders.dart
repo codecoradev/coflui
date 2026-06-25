@@ -14,6 +14,11 @@ import 'package:flutter/material.dart';
 class ContainerBuilders {
   ContainerBuilders._();
 
+  /// Builds a vertical [Column] from a JSON `column` component.
+  ///
+  /// Children are recursively rendered via [DynamicUIWidget]. The column
+  /// defaults to `mainAxisSize.min` to avoid layout errors inside scroll
+  /// views; override with `props.mainAxisSize: "max"`.
   static Widget column(BuildContext ctx, UIComponent c, controller) {
     final s = c.style;
     final children = c.children
@@ -42,6 +47,10 @@ class ContainerBuilders {
     return _maybeExpand(content, s);
   }
 
+  /// Builds a horizontal [Row] from a JSON `row` component.
+  ///
+  /// Each child is automatically wrapped in [Flexible] (or [Expanded] when
+  /// `props.flex` is set) to prevent unbounded-width layout crashes.
   static Widget row(BuildContext ctx, UIComponent c, controller) {
     final s = c.style;
     // Penting: child Row secara default mendapat constraint width TIDAK
@@ -112,6 +121,9 @@ class ContainerBuilders {
     );
   }
 
+  /// Builds a styled [CofluiCard] from a JSON `card` or `section` component.
+  /// The `label` field becomes the card title; children are stacked in a
+  /// column inside the card body.
   static Widget card(BuildContext ctx, UIComponent c, controller) {
     final s = c.style;
     final children = c.children

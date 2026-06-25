@@ -14,6 +14,14 @@ import 'package:flutter/material.dart';
 class ActionBuilders {
   ActionBuilders._();
 
+  /// Builds a [CofluiButton] from a JSON `button` component.
+  ///
+  /// Supported `props`:
+  /// - `variant`: `"primary"` | `"outline"` | `"danger"` | `"ghost"`
+  /// - `action`: id forwarded to [CofluiFormControllerLike.onAction].
+  /// - `widthInfinity`: bool — stretch to parent width (default: true for
+  ///   primary & danger variants).
+  /// - `icon`: material icon name (e.g. `"send"`, `"save"`, `"delete"`).
   static Widget button(BuildContext ctx, UIComponent c, controller) {
     final props = c.props;
     final variant = _variantOf(props['variant']);

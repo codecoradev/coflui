@@ -13,18 +13,26 @@ import 'package:flutter/services.dart';
 class InputBuilders {
   InputBuilders._();
 
+  /// Builds a [CofluiTextField] from a JSON `textfield` component.
+  /// Value changes are synced to the controller via [setValue].
   static Widget textfield(BuildContext ctx, UIComponent c, controller) =>
       _TextFieldBuilder(component: c, controller: controller);
 
+  /// Builds a [CofluiDropdown] from a JSON `dropdown` component.
+  /// Selection changes are synced to the controller.
   static Widget dropdown(BuildContext ctx, UIComponent c, controller) =>
       _DropdownBuilder(component: c, controller: controller);
 
+  /// Builds a toggle [Switch] from a JSON `switch` component.
   static Widget switchField(BuildContext ctx, UIComponent c, controller) =>
       _SwitchBuilder(component: c, controller: controller);
 
+  /// Builds a date-picker field from a JSON `datepicker` component.
+  /// Value is stored as `yyyy-MM-dd` string.
   static Widget datePicker(BuildContext ctx, UIComponent c, controller) =>
       _DatePickerBuilder(component: c, controller: controller);
 
+  /// Builds a [Checkbox] from a JSON `checkbox` component.
   static Widget checkbox(BuildContext ctx, UIComponent c, controller) =>
       _SwitchBuilder(
           component: c, controller: controller, useCheckbox: true);
