@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'screens/dynamic_dashboard_screen.dart';
 import 'screens/dynamic_form_screen.dart';
 import 'screens/playground_screen.dart';
+import 'screens/reference_screen.dart';
 import 'screens/responsive_screen.dart';
 import 'screens/widget_gallery_screen.dart';
 
@@ -75,6 +76,11 @@ class _ShellState extends State<_Shell> {
       selectedIcon: Icons.code,
     ),
     (
+      label: 'Reference',
+      icon: Icons.menu_book_outlined,
+      selectedIcon: Icons.menu_book,
+    ),
+    (
       label: 'Responsive',
       icon: Icons.devices_outlined,
       selectedIcon: Icons.devices,
@@ -86,6 +92,7 @@ class _ShellState extends State<_Shell> {
     DynamicFormScreen(),
     DynamicDashboardScreen(),
     PlaygroundScreen(),
+    ReferenceScreen(),
     ResponsiveScreen(),
   ];
 
