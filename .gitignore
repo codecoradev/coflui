@@ -1,0 +1,41 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# VS Code (uncomment to ignore)
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.fvm/
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+
+# Symbolication & obfuscation
+app.*.symbols
+app.*.map.json
+
+# Generated dart files (optional, keep if hand-edited)
+*.freezed.dart
+*.g.dart

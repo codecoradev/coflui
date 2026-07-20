@@ -9,6 +9,14 @@ homepage: https://github.com/codecoradev/coflui
 repository: https://github.com/codecoradev/coflui
 issue_tracker: https://github.com/codecoradev/coflui/issues
 
+topics:
+  - ui
+  - widgets
+  - dynamic-ui
+  - server-driven-ui
+  - responsive
+  - material-design
+
 environment:
   sdk: '>=3.5.0 <4.0.0'
   flutter: '>=1.17.0'

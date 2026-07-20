@@ -12,7 +12,7 @@ Initial extraction — standalone dynamic UI engine + native widget set.
   `UIComponent`, `UIStyle`, `WidgetRegistry`, `StyleResolver`,
   `CofluiFormController`, `DynamicUIWidget`, default builders, bootstrap.
 - Responsive `grid` component (breakpoint-driven column count).
-- Docs: `README`, `docs/ARCHITECTURE`, `docs/ROADMAP`, `docs/DYNAMIC_UI`.
+- Docs: `README`, `doc/ARCHITECTURE`, `doc/ROADMAP`, `doc/DYNAMIC_UI`.
 
 ### Changed (vs e_pg in-tree engine)
 - Removed GetX (`get`), `magic_view`, `micropack_core`, `flutter_screenutil`.

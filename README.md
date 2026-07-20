@@ -66,11 +66,28 @@ CofluiButton(
 );
 ```
 
+## Example app
+
+A runnable demo lives in [`example/`](example) — it builds for **iOS**, **Android**,
+**web**, and desktop out of the box. It showcases:
+
+- every native `Coflui*` widget (gallery)
+- a complete form rendered from JSON (inputs + submit/reset)
+- a responsive dashboard rendered from JSON (breakpoint-driven grid)
+- a live responsive demo
+
+```bash
+cd example
+flutter pub get
+flutter run -d chrome          # web
+flutter run -d ios             # iOS simulator
+```
+
 ## Documentation
 
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — layering, state strategy, design decisions
-- [docs/ROADMAP.md](docs/ROADMAP.md) — milestones & phased plan
-- [docs/DYNAMIC_UI.md](docs/DYNAMIC_UI.md) — JSON schema reference for all component types
+- [doc/ARCHITECTURE.md](doc/ARCHITECTURE.md) — layering, state strategy, design decisions
+- [doc/ROADMAP.md](doc/ROADMAP.md) — milestones & phased plan
+- [doc/DYNAMIC_UI.md](doc/DYNAMIC_UI.md) — JSON schema reference for all component types
 
 ## License
 

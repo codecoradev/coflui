@@ -30,6 +30,10 @@ enum UIType {
   // Action
   button;
 
+  /// Converts a JSON string (case-insensitive) into a [UIType].
+  ///
+  /// Supports aliases (e.g. `"input"` → [UIType.textfield], `"select"` →
+  /// [UIType.dropdown]). Returns [UIType.text] when [v] is null or unknown.
   static UIType fromString(String? v) {
     if (v == null) return UIType.text;
     switch (v.toLowerCase()) {
