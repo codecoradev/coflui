@@ -1,12 +1,13 @@
 # Cora Code Review Configuration
 # See: https://github.com/codecoradev/cora-cli
 
-# Provider — uses the key configured via `cora auth login` (freemodel/gpt-5.4).
-# Override here if you want to switch providers without re-authing.
+# Provider — uses the key configured via `cora auth login`.
+# Auth.toml currently points to z.ai (GLM). Update here if you re-auth to
+# another provider (e.g. openai, anthropic, ollama).
 provider:
-  provider: freemodel
-  model: gpt-5.4
-  base_url: https://api.freemodel.dev/v1
+  provider: zai
+  model: glm-4.6
+  base_url: https://api.z.ai/api/coding/paas/v4
 
 # Review focus areas: security, performance, bugs, best-practice, style
 focus:
