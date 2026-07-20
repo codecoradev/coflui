@@ -39,3 +39,6 @@ app.*.map.json
 # Generated dart files (optional, keep if hand-edited)
 *.freezed.dart
 *.g.dart
+
+# Cora code-review local cache (review history, etc)
+.cora/
