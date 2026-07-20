@@ -6,7 +6,7 @@
 # another provider (e.g. openai, anthropic, ollama).
 provider:
   provider: zai
-  model: glm-4.6
+  model: glm-5.2
   base_url: https://api.z.ai/api/coding/paas/v4
 
 # Review focus areas: security, performance, bugs, best-practice, style
