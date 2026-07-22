@@ -54,11 +54,19 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
   // controller listener doesn't recurse / rebuild mid-build.
   bool _applyingSelection = false;
 
+  // ── Resizable split (desktop) ────────────────────────────────────────
+  /// Editor pane width fraction (0.2 – 0.8). Drag the divider to resize.
+  double _splitRatio = 0.5;
+
+  /// Focus node for the preview's selectable region (copy text).
+  late final FocusNode _previewFocus;
+
   @override
   void initState() {
     super.initState();
     DynamicUIBootstrap.registerDefaults();
     _uiController = _PlaygroundController();
+    _previewFocus = FocusNode();
     _jsonCtrl = TextEditingController(text: playgroundTemplates.first.json);
     _searchCtrl = TextEditingController();
     _scrollCtrl = ScrollController();
@@ -83,6 +91,7 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
     _scrollCtrl.dispose();
     _editorFocus.dispose();
     _searchFocus.dispose();
+    _previewFocus.dispose();
     _uiController.dispose();
     super.dispose();
   }
@@ -353,14 +362,50 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
 
   // ── Layouts ─────────────────────────────────────────────────────────
 
-  Widget _split(BuildContext context) => Row(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(flex: 1, child: _editorPane(context)),
-          const VerticalDivider(width: 1),
-          Expanded(flex: 1, child: _previewPane(context)),
-        ],
+  Widget _split(BuildContext context) => LayoutBuilder(
+        builder: (context, constraints) {
+          final totalWidth = constraints.maxWidth;
+          final editorWidth = (totalWidth * _splitRatio).clamp(200.0, totalWidth - 200.0);
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                width: editorWidth,
+                child: _editorPane(context),
+              ),
+              _dragHandle(context, totalWidth),
+              Expanded(child: _previewPane(context)),
+            ],
+          );
+        },
       );
+
+  /// The draggable divider between editor and preview. Drag left/right to
+  /// resize the split. Cursor shows a resize shape on hover.
+  Widget _dragHandle(BuildContext context, double totalWidth) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.resizeColumn,
+      child: GestureDetector(
+        onHorizontalDragUpdate: (details) {
+          final box = context.findRenderObject() as RenderBox;
+          final local = box.globalToLocal(details.globalPosition);
+          setState(() {
+            _splitRatio = (local.dx / totalWidth).clamp(0.2, 0.8);
+          });
+        },
+        onDoubleTap: () => setState(() => _splitRatio = 0.5),
+        child: Container(
+          width: 8,
+          color: Colors.transparent,
+          alignment: Alignment.center,
+          child: Container(
+            width: 1,
+            color: CofluiColors.divider,
+          ),
+        ),
+      ),
+    );
+  }
 
   Widget _stacked(BuildContext context) => Column(
         children: [
@@ -562,16 +607,20 @@ class _PlaygroundScreenState extends State<PlaygroundScreen> {
                 duration: const Duration(milliseconds: 200),
                 child: _components.isEmpty
                     ? _empty(context)
-                    : ListView(
-                        key: ValueKey(_components.length),
-                        padding: const EdgeInsets.only(bottom: 12),
-                        children: [
-                          for (final c in _components)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 12),
-                              child: DynamicUIWidget(c, controller: _uiController),
-                            ),
-                        ],
+                    : SelectableRegion(
+                        focusNode: _previewFocus,
+                        selectionControls: materialTextSelectionControls,
+                        child: ListView(
+                          key: ValueKey(_components.length),
+                          padding: const EdgeInsets.only(bottom: 12),
+                          children: [
+                            for (final c in _components)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 12),
+                                child: DynamicUIWidget(c, controller: _uiController),
+                              ),
+                          ],
+                        ),
                       ),
               ),
             ),

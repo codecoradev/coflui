@@ -26,22 +26,63 @@ class CofluiColors {
   /// Secondary brand color for less prominent accents.
   static Color secondary = const Color(0xFF0074D9);
 
-  /// Pura brand — yellow accent.
+  // Accent palette (overridable brand accents)
+
+  /// Yellow accent. Override at boot to rebrand.
+  static Color accentYellow = const Color(0xFFF2C806);
+
+  /// Orange accent. Override at boot to rebrand.
+  static Color accentOrange = const Color(0xFFFEA72C);
+
+  /// Green accent. Override at boot to rebrand.
+  static Color accentGreen = const Color(0xFF8EC302);
+
+  /// Teal accent. Override at boot to rebrand.
+  static Color accentTeal = const Color(0xFF37CCCC);
+
+  /// Purple accent. Override at boot to rebrand.
+  static Color accentPurple = const Color(0xFF6A35AE);
+
+  /// Pink accent. Override at boot to rebrand.
+  static Color accentPink = const Color(0xFFB01669);
+
+  /// Blue accent (cool end of the signature gradient).
+  static Color accentBlue = const Color(0xFF088ECE);
+
+  // Gradient intermediates (tints used by [CofluiGradients])
+
+  /// Pale tint of [accentOrange] (gradient start).
+  static Color accentOrangePale = const Color(0xFFFEDFA8);
+
+  /// Mid warm tone between orange and blue (gradient mid-stop).
+  static Color accentMidWarm = const Color(0xFFC1965C);
+
+  /// Pale tint of [accentTeal] (cool gradient start).
+  static Color accentCyanPale = const Color(0xFFB5EDED);
+
+  // ── Deprecated aliases (kept for backward-compat, will be removed) ──
+  /// Deprecated — use [accentYellow].
+  @Deprecated('Use CofluiColors.accentYellow')
   static Color puraYellow = const Color(0xFFF2C806);
 
-  /// Pura brand — orange accent.
+  /// Deprecated — use [accentOrange].
+  @Deprecated('Use CofluiColors.accentOrange')
   static Color puraOrange = const Color(0xFFFEA72C);
 
-  /// Pura brand — green accent.
+  /// Deprecated — use [accentGreen].
+  @Deprecated('Use CofluiColors.accentGreen')
   static Color puraGreen = const Color(0xFF8EC302);
 
-  /// Pura brand — teal accent.
+  /// Deprecated — use [accentTeal].
+  @Deprecated('Use CofluiColors.accentTeal')
   static Color puraTeal = const Color(0xFF37CCCC);
 
-  /// Pura brand — purple accent.
+  /// Deprecated — use [accentPurple].
+  @Deprecated('Use CofluiColors.accentPurple')
   static Color puraPurple = const Color(0xFF6A35AE);
 
-  /// Pura brand — pink accent.
+  /// Deprecated — use [accentPink].
+  @Deprecated('Use CofluiColors.accentPink')
   static Color puraPink = const Color(0xFFB01669);
 
   // Surfaces

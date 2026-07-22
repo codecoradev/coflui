@@ -157,7 +157,7 @@ class ResponsiveScreen extends StatelessWidget {
   Color _deviceColor(CofluiDevice d) => switch (d) {
         CofluiDevice.mobile => CofluiColors.secondary,
         CofluiDevice.tablet => CofluiColors.primary,
-        CofluiDevice.desktop => CofluiColors.puraGreen,
+        CofluiDevice.desktop => CofluiColors.accentGreen,
       };
 
   int _colsFor(CofluiDevice d) => switch (d) {

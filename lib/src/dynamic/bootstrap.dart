@@ -1,7 +1,10 @@
 import 'package:coflui/src/dynamic/builders/action_builders.dart';
 import 'package:coflui/src/dynamic/builders/container_builders.dart';
+import 'package:coflui/src/dynamic/builders/content_builders.dart';
 import 'package:coflui/src/dynamic/builders/display_builders.dart';
 import 'package:coflui/src/dynamic/builders/input_builders.dart';
+import 'package:coflui/src/dynamic/builders/list_builder.dart';
+import 'package:coflui/src/dynamic/builders/media_builders.dart';
 import 'package:coflui/src/dynamic/models/ui_component.dart';
 import 'package:coflui/src/dynamic/registry/widget_registry.dart';
 
@@ -30,6 +33,7 @@ class DynamicUIBootstrap {
       UIType.text: DisplayBuilders.text,
       UIType.heading: DisplayBuilders.heading,
       UIType.divider: DisplayBuilders.divider,
+      UIType.chip: DisplayBuilders.chip,
 
       // Input
       UIType.textfield: InputBuilders.textfield,
@@ -40,6 +44,18 @@ class DynamicUIBootstrap {
 
       // Action
       UIType.button: ActionBuilders.button,
+
+      // Media
+      UIType.icon: MediaBuilders.icon,
+      UIType.image: MediaBuilders.image,
+      UIType.gradientBar: MediaBuilders.gradientBar,
+
+      // Content
+      UIType.listTile: ContentBuilders.listTile,
+      UIType.detailRow: ContentBuilders.detailRow,
+
+      // Composite
+      UIType.list: ListBuilders.list,
     });
   }
 }
