@@ -1,8 +1,10 @@
 import 'package:coflui/src/dynamic/models/ui_component.dart';
 import 'package:coflui/src/dynamic/models/ui_style.dart';
+import 'package:coflui/src/dynamic/resolvers/icon_resolver.dart';
 import 'package:coflui/src/dynamic/resolvers/style_resolver.dart';
 import 'package:coflui/src/theme/coflui_colors.dart';
 import 'package:coflui/src/theme/coflui_typography.dart';
+import 'package:coflui/src/widgets/coflui_chip.dart';
 import 'package:coflui/src/widgets/coflui_text.dart';
 import 'package:flutter/material.dart';
 
@@ -68,5 +70,49 @@ class DisplayBuilders {
       thickness: s.borderWidth ?? 1,
       color: s.color ?? CofluiColors.divider,
     );
+  }
+
+  /// Builds a [CofluiChip] (status pill / badge) from a JSON `chip` component.
+  ///
+  /// Props:
+  /// - `label`: text (falls back to `value` / `label`).
+  /// - `variant`: `"success"` | `"warning"` | `"danger"` | `"info"` |
+  ///   `"neutral"` (default neutral).
+  /// - `icon`: Material icon name (e.g. `"check_circle"`).
+  static Widget chip(BuildContext ctx, UIComponent c, _) {
+    final props = c.props;
+    final label = (props['label'] ?? c.value ?? c.label ?? '').toString();
+    final variant = _variantOf(props['variant']);
+    final icon = IconResolver.resolve(props['icon']);
+    return CofluiChip(label, variant: variant, icon: icon);
+  }
+
+  static CofluiChipVariant _variantOf(dynamic v) {
+    switch ((v ?? 'neutral').toString().toLowerCase()) {
+      case 'success':
+      case 'approved':
+      case 'ok':
+      case 'green':
+        return CofluiChipVariant.success;
+      case 'warning':
+      case 'pending':
+      case 'orange':
+        return CofluiChipVariant.warning;
+      case 'danger':
+      case 'error':
+      case 'rejected':
+      case 'red':
+      case 'pdf':
+        return CofluiChipVariant.danger;
+      case 'info':
+      case 'blue':
+      case 'image':
+      case 'img':
+      case 'photo':
+        return CofluiChipVariant.info;
+      case 'neutral':
+      default:
+        return CofluiChipVariant.neutral;
+    }
   }
 }

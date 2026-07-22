@@ -4,7 +4,7 @@ description: >-
   widget renderer (Server-Driven UI) with a set of native Flutter UI widgets
   (CofluiText, CofluiButton, …). State-management agnostic (built on
   ChangeNotifier + native Flutter), responsive across mobile / tablet / desktop.
-version: 0.2.0
+version: 0.3.0
 homepage: https://github.com/codecoradev/coflui
 repository: https://github.com/codecoradev/coflui
 issue_tracker: https://github.com/codecoradev/coflui/issues

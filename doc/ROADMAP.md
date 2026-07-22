@@ -36,14 +36,15 @@ coflui runs native underneath.
 - ⬜ Navigation-shell guidance sample (master-detail on desktop)
 - ⬜ Breakpoint-driven `grid` hints documented + tested
 
-## Milestone 4 — Richer dynamic components 🚧
+## Milestone 4 — Richer dynamic components ✅
 
 - ✅ `image` component (network + asset) — via `CofluiIcon` + `image` type
-- ⬜ `list` component (bind an array → repeat a child template)
+- ✅ `list` component (bind an array → repeat a child template)
 - ⬜ Conditional visibility (`visibleWhen` expression on a node)
 - ⬜ Dynamic option sources (fetch dropdown options from an endpoint)
 - ✅ `icon` / `gradient_bar` / `detail_row` components
 - ✅ `list_tile` component (card-style row)
+- ✅ `chip` component (status pill / badge)
 
 ## Milestone 5 — Full native widget set 🚧
 

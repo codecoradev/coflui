@@ -37,7 +37,11 @@ enum UIType {
 
   // Content
   listTile,
-  detailRow;
+  detailRow,
+
+  // Composite
+  chip,
+  list;
 
   /// Converts a JSON string (case-insensitive) into a [UIType].
   ///
@@ -98,6 +102,14 @@ enum UIType {
       case 'detail_row':
       case 'detail':
         return UIType.detailRow;
+      case 'chip':
+      case 'badge':
+      case 'tag':
+        return UIType.chip;
+      case 'list':
+      case 'repeat':
+      case 'foreach':
+        return UIType.list;
       default:
         return UIType.text;
     }

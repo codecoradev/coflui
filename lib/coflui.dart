@@ -30,6 +30,7 @@ export 'src/widgets/coflui_app_bar.dart';
 export 'src/widgets/coflui_scaffold.dart';
 export 'src/widgets/coflui_list_tile.dart';
 export 'src/widgets/coflui_detail_row.dart';
+export 'src/widgets/coflui_chip.dart';
 
 // Dynamic UI engine
 export 'src/dynamic/bootstrap.dart';
@@ -38,5 +39,6 @@ export 'src/dynamic/models/ui_style.dart';
 export 'src/dynamic/registry/widget_registry.dart';
 export 'src/dynamic/resolvers/style_resolver.dart';
 export 'src/dynamic/resolvers/icon_resolver.dart';
+export 'src/dynamic/builders/list_builder.dart' show interpolateComponent;
 export 'src/dynamic/controllers/coflui_form_controller.dart';
 export 'src/dynamic/widgets/dynamic_ui_widget.dart';

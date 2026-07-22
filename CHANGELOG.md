@@ -1,3 +1,24 @@
+## 0.3.0
+
+Full-page dynamic detail pages — `chip` + `list` components.
+
+### Added
+- **`CofluiChip`** — status pill / badge (5 variants: success/warning/danger/info/neutral), optional icon.
+- **`list` component** — repeat a child template over an `items[]` array with
+  `{field}` placeholder interpolation. The key enabler for full-page dynamic
+  layouts (approvers, attachments, line items, timelines). Supports
+  `direction` (vertical/horizontal/wrap), `spacing`, and `emptyText`.
+- **`interpolateComponent()`** — exported helper that substitutes `{key}`
+  placeholders in a `UIComponent` tree from a data map.
+- **`chip` + `list` UIType** values + builder registration.
+- **Example: full detail page** — `detail_page_screen.dart` renders a complete
+  approval-detail document from JSON (`buildDetailJson` + `dummyApproval`).
+  Clone-ready pattern: swap the data map → whole page re-renders.
+- 8 new tests (chip variants, list repeat, field binding, empty state).
+
+### Changed
+- `Milestone 4` in ROADMAP → ✅ complete.
+
 ## 0.2.0
 
 Reusable component extraction + icon system + dynamic-UI integration.

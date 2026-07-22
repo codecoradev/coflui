@@ -1,6 +1,7 @@
 import 'package:coflui/coflui.dart';
 import 'package:flutter/material.dart';
 
+import 'screens/detail_page_screen.dart';
 import 'screens/dynamic_components_screen.dart';
 import 'screens/dynamic_dashboard_screen.dart';
 import 'screens/dynamic_form_screen.dart';
@@ -62,6 +63,11 @@ class _ShellState extends State<_Shell> {
       selectedIcon: Icons.widgets,
     ),
     (
+      label: 'Detail',
+      icon: Icons.receipt_long_outlined,
+      selectedIcon: Icons.receipt_long,
+    ),
+    (
       label: 'Components',
       icon: Icons.extension_outlined,
       selectedIcon: Icons.extension,
@@ -95,6 +101,7 @@ class _ShellState extends State<_Shell> {
 
   static const _screens = <Widget>[
     WidgetGalleryScreen(),
+    DetailPageScreen(),
     DynamicComponentsScreen(),
     DynamicFormScreen(),
     DynamicDashboardScreen(),
