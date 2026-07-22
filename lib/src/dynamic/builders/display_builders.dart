@@ -79,12 +79,26 @@ class DisplayBuilders {
   /// - `variant`: `"success"` | `"warning"` | `"danger"` | `"info"` |
   ///   `"neutral"` (default neutral).
   /// - `icon`: Material icon name (e.g. `"check_circle"`).
-  static Widget chip(BuildContext ctx, UIComponent c, _) {
+  static Widget chip(BuildContext ctx, UIComponent c, controller) {
     final props = c.props;
     final label = (props['label'] ?? c.value ?? c.label ?? '').toString();
     final variant = _variantOf(props['variant']);
     final icon = IconResolver.resolve(props['icon']);
-    return CofluiChip(label, variant: variant, icon: icon);
+    final chip = CofluiChip(label, variant: variant, icon: icon);
+
+    // When an `action` prop is present, make the chip tappable and forward
+    // the tap to the controller (same convention as button / list_tile).
+    final action = props['action']?.toString();
+    if (action != null) {
+      return MouseRegion(
+        cursor: SystemMouseCursors.click,
+        child: GestureDetector(
+          onTap: () => controller.onAction(action, c.id),
+          child: chip,
+        ),
+      );
+    }
+    return chip;
   }
 
   static CofluiChipVariant _variantOf(dynamic v) {

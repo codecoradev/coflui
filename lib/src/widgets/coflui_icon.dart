@@ -141,6 +141,12 @@ class CofluiIcon extends StatelessWidget {
     }
 
     // ── Raster asset ───────────────────────────────────────────────
+    // Guard: only attempt asset load when the string looks like a path
+    // (has a file extension or a path separator). Bare words like "Approved"
+    // or "—" would otherwise trigger a doomed Image.asset fetch → 404 noise.
+    if (!_looksLikePath(s)) {
+      return errorWidget ?? _defaultError();
+    }
     return Image.asset(
       s,
       width: w,
@@ -158,6 +164,11 @@ class CofluiIcon extends StatelessWidget {
 
   /// `.svg` extension detector (case-insensitive).
   static bool _isSvg(String s) => s.toLowerCase().endsWith('.svg');
+
+  /// Heuristic: does [s] look like an asset path or URL? A real path has a
+  /// file extension or a path separator. Bare words ("Approved", "—") don't.
+  static bool _looksLikePath(String s) =>
+      s.contains('/') || RegExp(r'\.[a-zA-Z0-9]{2,5}$').hasMatch(s);
 
   Widget _defaultPlaceholder() => SizedBox(
         width: size,

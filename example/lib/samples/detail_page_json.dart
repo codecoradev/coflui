@@ -143,7 +143,7 @@ List<Map<String, dynamic>> buildDetailJson(Map<String, dynamic> d) {
             'title': '{name}',
             'subtitle': '{role}',
             'leading': 'person',
-            'trailing': '{status}',
+            'trailing': '{statusIcon}',
             'action': 'view_approver',
           },
         },
@@ -215,11 +215,13 @@ List<Map<String, dynamic>> buildDetailJson(Map<String, dynamic> d) {
       },
       'children': [
         {
+          'id': '{name}',
           'type': 'chip',
           'props': {
             'label': '{name}',
             'variant': '{kind}',
             'icon': 'attach_file',
+            'action': 'view_attachment',
           },
         },
       ],
@@ -266,9 +268,9 @@ final Map<String, dynamic> dummyApproval = {
   'supplier': 'PT Maju Jaya Sentosa',
   'description': 'Q3 office supplies & raw material procurement.',
   'approvers': [
-    {'name': 'Andi Wijaya', 'role': 'Line Manager', 'status': 'Approved', 'statusVariant': 'success'},
-    {'name': 'Maya Putri', 'role': 'Finance Lead', 'status': 'Pending', 'statusVariant': 'warning'},
-    {'name': 'Rian Dewa', 'role': 'Director', 'status': '—', 'statusVariant': 'neutral'},
+    {'name': 'Andi Wijaya', 'role': 'Line Manager', 'status': 'Approved', 'statusVariant': 'success', 'statusIcon': 'check_circle'},
+    {'name': 'Maya Putri', 'role': 'Finance Lead', 'status': 'Pending', 'statusVariant': 'warning', 'statusIcon': 'schedule'},
+    {'name': 'Rian Dewa', 'role': 'Director', 'status': '—', 'statusVariant': 'neutral', 'statusIcon': 'hourglass_empty'},
   ],
   'lineItems': [
     {'name': 'A4 Paper (80gsm)', 'qty': '50', 'satuan': 'rim', 'price': 'Rp 45.000', 'total': 'Rp 2.250.000'},
@@ -276,8 +278,8 @@ final Map<String, dynamic> dummyApproval = {
     {'name': 'Cardstock 300gsm', 'qty': '20', 'satuan': 'pack', 'price': 'Rp 120.000', 'total': 'Rp 2.400.000'},
   ],
   'attachments': [
-    {'name': 'invoice.pdf', 'kind': 'pdf'},
-    {'name': 'quotation.pdf', 'kind': 'pdf'},
-    {'name': 'spec.jpg', 'kind': 'image'},
+    {'name': 'invoice.pdf', 'kind': 'pdf', 'url': 'https://africau.edu/images/default/sample.pdf'},
+    {'name': 'quotation.pdf', 'kind': 'pdf', 'url': 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'},
+    {'name': 'spec.jpg', 'kind': 'image', 'url': 'https://picsum.photos/seed/coflui/600/400'},
   ],
 };
