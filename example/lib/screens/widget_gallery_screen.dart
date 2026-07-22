@@ -179,6 +179,146 @@ class WidgetGalleryScreen extends StatelessWidget {
 
           _Divider(),
 
+          // ── Icon ──────────────────────────────────────────
+          const _SectionTitle('CofluiIcon (auto-detect)'),
+          CofluiText(
+            'One widget, four sources: IconData, .svg asset, .png asset, '
+            'and network URL (disk-cached).',
+            style: TextStyle(fontSize: 12, color: CofluiColors.onSurfaceVariant),
+          ),
+          const SizedBox(height: 12),
+          const Wrap(
+            spacing: 20,
+            runSpacing: 16,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              _IconSample('Material\nIconData', CofluiIcon(Icons.home, size: 40)),
+              _IconSample('SVG asset', CofluiIcon('assets/logo.svg', size: 40)),
+              _IconSample(
+                'Network URL\n(cached)',
+                CofluiIcon(
+                  'https://flutter.dev/assets/images/shared/brand/flutter/logo/logo-mono-61.png',
+                  size: 40,
+                ),
+              ),
+              _IconSample(
+                'Tinted',
+                CofluiIcon(Icons.star, size: 40, color: Color(0xFFFEA72C)),
+              ),
+            ],
+          ),
+
+          _Divider(),
+
+          // ── Gradients ──────────────────────────────────────
+          const _SectionTitle('CofluiGradients / CofluiGradientBar'),
+          CofluiText(
+            'Brand gradient presets (accent / cool / warm) built on overridable '
+            'CofluiColors tokens. Override at boot to rebrand.',
+            style: TextStyle(fontSize: 12, color: CofluiColors.onSurfaceVariant),
+          ),
+          const SizedBox(height: 12),
+          const CofluiGradientBar(gradient: 'accent', height: 8),
+          const SizedBox(height: 8),
+          const CofluiGradientBar(gradient: 'cool', height: 8),
+          const SizedBox(height: 8),
+          const CofluiGradientBar(gradient: 'warm', height: 8),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: CofluiGradients.box(preset: 'accent', radius: 12),
+            child: const CofluiText(
+              'Gradient BoxDecoration helper',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+            ),
+          ),
+
+          _Divider(),
+
+          // ── ListTile ───────────────────────────────────────
+          const _SectionTitle('CofluiListTile'),
+          CofluiListTile(
+            title: 'Budi Santoso',
+            subtitle: 'Senior Developer',
+            leading: const CofluiIcon(Icons.person, size: 24),
+            trailing: const CofluiIcon(Icons.chevron_right, size: 24),
+            onTap: () {},
+          ),
+          CofluiListTile(
+            title: 'Siti Rahma',
+            subtitle: 'Product Manager',
+            leading: const CofluiIcon(Icons.person, size: 24),
+            trailing: const CofluiIcon(Icons.chevron_right, size: 24),
+            onTap: () {},
+          ),
+
+          _Divider(),
+
+          // ── DetailRow ──────────────────────────────────────
+          const _SectionTitle('CofluiDetailRow'),
+          const CofluiCard(
+            child: Column(
+              children: [
+                CofluiDetailRow(
+                  icon: Icons.person,
+                  label: 'Name',
+                  value: 'Budi Santoso',
+                ),
+                SizedBox(height: 12),
+                CofluiDetailRow(
+                  icon: Icons.email,
+                  label: 'Email',
+                  value: 'budi@example.com',
+                ),
+                SizedBox(height: 12),
+                CofluiDetailRow(
+                  icon: Icons.check_circle,
+                  label: 'Status',
+                  value: 'Approved',
+                  valueColor: Color(0xFF8EC302),
+                ),
+              ],
+            ),
+          ),
+
+          _Divider(),
+
+          // ── Loading button + enhanced TextField ────────────
+          const _SectionTitle('CofluiButton (loading) + CofluiTextField (rich)'),
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            children: [
+              CofluiButton(
+                label: 'Loading',
+                isLoading: true,
+                onPressed: () {},
+              ),
+              CofluiButton(
+                label: 'Loading',
+                variant: CofluiButtonVariant.outline,
+                isLoading: true,
+                onPressed: () {},
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          const CofluiTextField(
+            label: 'Email',
+            hint: 'you@example.com',
+            keyboardType: TextInputType.emailAddress,
+            prefixIcon: Icon(Icons.email),
+          ),
+          const SizedBox(height: 8),
+          const CofluiTextField(
+            label: 'Search',
+            hint: 'Type to search…',
+            prefixIcon: Icon(Icons.search),
+            suffixIcon: Icon(Icons.clear),
+          ),
+
+          _Divider(),
+
           // ── Dialog ────────────────────────────────────────
           const _SectionTitle('CofluiDialog'),
           Wrap(
@@ -248,6 +388,44 @@ class _Divider extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
       child: Divider(color: CofluiColors.divider),
+    );
+  }
+}
+
+/// Labeled icon sample cell for the gallery.
+class _IconSample extends StatelessWidget {
+  final String caption;
+  final Widget icon;
+  const _IconSample(this.caption, this.icon);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 92,
+      child: Column(
+        children: [
+          Container(
+            width: 56,
+            height: 56,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: CofluiColors.background,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: CofluiColors.border),
+            ),
+            child: icon,
+          ),
+          const SizedBox(height: 6),
+          Text(
+            caption,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 10,
+              color: CofluiColors.onSurfaceVariant,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
