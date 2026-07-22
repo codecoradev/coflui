@@ -143,6 +143,54 @@ void main() {
       final value = tester.widget<Text>(find.text('Approved'));
       expect(value.style?.color, isNot(equals(CofluiColors.onSurface)));
     });
+
+    testWidgets('detailRow accepts iconSize prop', (tester) async {
+      await _pumpDynamic(tester, [
+        {
+          'id': 'd',
+          'type': 'detail_row',
+          'props': {
+            'icon': 'star',
+            'iconSize': 32,
+            'label': 'Rating',
+            'value': '5.0',
+          },
+        },
+      ]);
+      final icon = tester.widget<Icon>(find.byIcon(Icons.star));
+      expect(icon.size, 32);
+    });
+
+    testWidgets('detailRow renders without icon when omitted', (tester) async {
+      await _pumpDynamic(tester, [
+        {
+          'id': 'd',
+          'type': 'detail_row',
+          'props': {'label': 'No Icon', 'value': 'val'},
+        },
+      ]);
+      expect(find.text('No Icon'), findsOneWidget);
+      expect(find.byType(Icon), findsNothing);
+    });
+
+    testWidgets('listTile leadingSize controls trailing icon size',
+        (tester) async {
+      await _pumpDynamic(tester, [
+        {
+          'id': 'lt',
+          'type': 'list_tile',
+          'props': {
+            'title': 'T',
+            'leading': 'home',
+            'trailing': 'star',
+            'leadingSize': 30,
+            'trailingSize': 18,
+          },
+        },
+      ]);
+      expect((tester.widget<Icon>(find.byIcon(Icons.home))).size, 30);
+      expect((tester.widget<Icon>(find.byIcon(Icons.star))).size, 18);
+    });
   });
 
   group('DynamicUIWidget — registration', () {

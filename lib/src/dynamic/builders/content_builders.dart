@@ -2,8 +2,8 @@
 
 import 'package:coflui/src/dynamic/models/ui_component.dart';
 import 'package:coflui/src/dynamic/resolvers/icon_resolver.dart';
+import 'package:coflui/src/theme/coflui_colors.dart';
 import 'package:coflui/src/widgets/coflui_detail_row.dart';
-import 'package:coflui/src/widgets/coflui_icon.dart';
 import 'package:coflui/src/widgets/coflui_list_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -19,8 +19,9 @@ class ContentBuilders {
   /// Props:
   /// - `title`: primary text (falls back to `label`).
   /// - `subtitle`: secondary text.
-  /// - `leading`: icon name / source (→ [CofluiIcon]).
-  /// - `trailing`: icon name / source (→ [CofluiIcon]).
+  /// - `leading` / `trailing`: icon name, code-point, asset, or URL
+  ///   (auto-detected via [resolveIconWidget]).
+  /// - `leadingSize` / `trailingSize`: icon size (default 24).
   /// - `action`: when set, tapping the tile calls
   ///   `controller.onAction(action, componentId)`.
   static Widget listTile(BuildContext ctx, UIComponent c, controller) {
@@ -32,8 +33,14 @@ class ContentBuilders {
     return CofluiListTile(
       title: title,
       subtitle: subtitle,
-      leading: _iconOf(props['leading']),
-      trailing: _iconOf(props['trailing']),
+      leading: resolveIconWidget(
+        props['leading'],
+        size: _toDouble(props['leadingSize']) ?? 24,
+      ),
+      trailing: resolveIconWidget(
+        props['trailing'],
+        size: _toDouble(props['trailingSize']) ?? 24,
+      ),
       onTap: action != null
           ? () => controller.onAction(action, c.id)
           : null,
@@ -43,7 +50,9 @@ class ContentBuilders {
   /// Builds a `detailRow` from JSON.
   ///
   /// Props:
-  /// - `icon`: Material icon name (e.g. `"person"`).
+  /// - `icon`: Material icon name, code-point, asset path, or URL
+  ///   (auto-detected via [resolveIconWidget]).
+  /// - `iconSize`: icon size in logical px (default 20).
   /// - `label`: small caption text (falls back to `label`).
   /// - `value`: prominent text (falls back to `value`).
   /// - `highlight`: when `true`, renders the value in the theme primary color.
@@ -51,32 +60,24 @@ class ContentBuilders {
     final props = c.props;
     final label = (props['label'] ?? c.label ?? '').toString();
     final value = (props['value'] ?? c.value ?? '').toString();
-    final iconData =
-        IconResolver.resolve(props['icon']) ?? Icons.info_outline;
     final highlight = props['highlight'] == true;
+    final iconSize = _toDouble(props['iconSize']) ?? 20;
 
     return CofluiDetailRow(
-      icon: iconData,
+      icon: resolveIconWidget(
+        props['icon'],
+        size: iconSize,
+        color: CofluiColors.onSurfaceVariant,
+      ),
       label: label,
       value: value,
       valueColor: highlight ? Theme.of(ctx).colorScheme.primary : null,
     );
   }
+}
 
-  /// Builds a leading/trailing [CofluiIcon] from a prop value.
-  ///
-  /// Accepts an icon name (`"home"`), a code-point (`"0xe318"`), or an
-  /// asset/URL path (auto-detected by [CofluiIcon]).
-  static Widget? _iconOf(dynamic v) {
-    if (v == null) return null;
-    final s = v.toString().trim();
-    if (s.isEmpty) return null;
-
-    // Try named/code-point resolution first.
-    final resolved = IconResolver.resolve(s);
-    if (resolved != null) return CofluiIcon.icon(resolved, size: 24);
-
-    // Otherwise treat as an asset / URL path.
-    return CofluiIcon(s, size: 24);
-  }
+double? _toDouble(dynamic v) {
+  if (v == null) return null;
+  if (v is num) return v.toDouble();
+  return double.tryParse(v.toString());
 }

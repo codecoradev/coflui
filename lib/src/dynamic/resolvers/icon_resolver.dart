@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_dynamic_calls
 
+import 'package:coflui/src/widgets/coflui_icon.dart';
 import 'package:flutter/material.dart';
 
 /// Resolves a JSON icon name (or code-point) into a Flutter [IconData].
@@ -158,4 +159,40 @@ class IconResolver {
     final lower = map[s.toLowerCase()];
     return lower;
   }
+}
+
+/// Resolves a prop value into a ready-to-render icon [Widget].
+///
+/// The universal icon source for the dynamic-UI builders. One value, all
+/// sources:
+///
+/// | Input                         | Rendered as                  |
+/// |-------------------------------|------------------------------|
+/// | Material icon name (`"home"`) | [CofluiIcon] (Material icon)  |
+/// | Code-point (`"0xe318"`)       | [CofluiIcon] (Material icon)  |
+/// | SVG asset (`"assets/x.svg"`)  | [CofluiIcon] (SVG)            |
+/// | Raster asset (`"assets/x.png")| [CofluiIcon] (asset)          |
+/// | Network URL (`"https://…"`)   | [CofluiIcon] (disk-cached)   |
+///
+/// Returns `null` for `null`/empty input so callers can skip rendering.
+///
+/// [size] controls the rendered dimension (default 24). [color] optionally
+/// tints icons / SVGs / raster assets.
+Widget? resolveIconWidget(
+  dynamic value, {
+  double size = 24,
+  Color? color,
+}) {
+  if (value == null) return null;
+  final s = value.toString().trim();
+  if (s.isEmpty) return null;
+
+  // Named / code-point Material icon.
+  final resolved = IconResolver.resolve(s);
+  if (resolved != null) {
+    return CofluiIcon.icon(resolved, size: size, color: color);
+  }
+
+  // Otherwise treat as an asset path or URL → CofluiIcon auto-detects.
+  return CofluiIcon(s, size: size, color: color);
 }

@@ -123,8 +123,8 @@ void main() {
     testWidgets('renders icon + label + value', (tester) async {
       await pump(
         tester,
-        const CofluiDetailRow(
-          icon: Icons.calendar_today,
+        CofluiDetailRow(
+          icon: const Icon(Icons.calendar_today),
           label: 'Date',
           value: '2026-07-22',
         ),
@@ -134,11 +134,32 @@ void main() {
       expect(find.text('2026-07-22'), findsOneWidget);
     });
 
+    testWidgets('renders without icon when icon is null', (tester) async {
+      await pump(
+        tester,
+        const CofluiDetailRow(label: 'No Icon', value: 'value'),
+      );
+      expect(find.text('No Icon'), findsOneWidget);
+      expect(find.byType(Icon), findsNothing);
+    });
+
+    testWidgets('accepts a CofluiIcon (any source) as icon', (tester) async {
+      await pump(
+        tester,
+        const CofluiDetailRow(
+          icon: CofluiIcon.icon(Icons.star, size: 20),
+          label: 'Rating',
+          value: '5.0',
+        ),
+      );
+      expect(find.byIcon(Icons.star), findsOneWidget);
+    });
+
     testWidgets('applies valueColor when provided', (tester) async {
       await pump(
         tester,
         const CofluiDetailRow(
-          icon: Icons.check,
+          icon: Icon(Icons.check),
           label: 'Status',
           value: 'OK',
           valueColor: Colors.green,

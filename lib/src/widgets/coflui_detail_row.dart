@@ -8,9 +8,22 @@ import '../theme/coflui_typography.dart';
 /// Used in detail views, summaries, and read-only info layouts. The [icon]
 /// sits on the leading edge, [label] is a small muted caption, and [value]
 /// is the prominent text. Pass [valueColor] to highlight (e.g. success/error).
+///
+/// [icon] is a [Widget] (typically a [CofluiIcon] or [Icon]) so it accepts
+/// any source: Material icon, SVG, PNG asset, or network URL. Pass `null`
+/// to render the row without a leading icon.
+///
+/// ```dart
+/// CofluiDetailRow(
+///   icon: CofluiIcon.icon(Icons.person, size: 20),
+///   label: 'Name',
+///   value: 'Budi',
+/// )
+/// ```
 class CofluiDetailRow extends StatelessWidget {
-  /// Leading icon data. Rendered via [Icon].
-  final IconData icon;
+  /// Leading icon widget (typically a [CofluiIcon] or [Icon]).
+  /// When `null`, the row renders without an icon.
+  final Widget? icon;
 
   /// Small muted label above the value.
   final String label;
@@ -22,6 +35,7 @@ class CofluiDetailRow extends StatelessWidget {
   final Color? valueColor;
 
   /// Spacing between the icon and the text column. Defaults to 12.
+  /// Ignored when [icon] is null.
   final double iconGap;
 
   /// Spacing between label and value. Defaults to 2.
@@ -29,7 +43,7 @@ class CofluiDetailRow extends StatelessWidget {
 
   const CofluiDetailRow({
     super.key,
-    required this.icon,
+    this.icon,
     required this.label,
     required this.value,
     this.valueColor,
@@ -42,8 +56,10 @@ class CofluiDetailRow extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, size: 20, color: CofluiColors.onSurfaceVariant),
-        SizedBox(width: iconGap),
+        if (icon != null) ...[
+          icon!,
+          SizedBox(width: iconGap),
+        ],
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

@@ -260,19 +260,19 @@ class WidgetGalleryScreen extends StatelessWidget {
             child: Column(
               children: [
                 CofluiDetailRow(
-                  icon: Icons.person,
+                  icon: Icon(Icons.person),
                   label: 'Name',
                   value: 'Budi Santoso',
                 ),
                 SizedBox(height: 12),
                 CofluiDetailRow(
-                  icon: Icons.email,
+                  icon: Icon(Icons.email),
                   label: 'Email',
                   value: 'budi@example.com',
                 ),
                 SizedBox(height: 12),
                 CofluiDetailRow(
-                  icon: Icons.check_circle,
+                  icon: Icon(Icons.check_circle),
                   label: 'Status',
                   value: 'Approved',
                   valueColor: Color(0xFF8EC302),
