@@ -28,7 +28,16 @@ enum UIType {
   checkbox,
 
   // Action
-  button;
+  button,
+
+  // Media
+  icon,
+  image,
+  gradientBar,
+
+  // Content
+  listTile,
+  detailRow;
 
   /// Converts a JSON string (case-insensitive) into a [UIType].
   ///
@@ -72,6 +81,23 @@ enum UIType {
       case 'button':
       case 'btn':
         return UIType.button;
+      case 'icon':
+        return UIType.icon;
+      case 'image':
+      case 'img':
+        return UIType.image;
+      case 'gradientbar':
+      case 'gradient_bar':
+      case 'gradient':
+        return UIType.gradientBar;
+      case 'listtile':
+      case 'list_tile':
+      case 'tile':
+        return UIType.listTile;
+      case 'detailrow':
+      case 'detail_row':
+      case 'detail':
+        return UIType.detailRow;
       default:
         return UIType.text;
     }

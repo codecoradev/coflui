@@ -253,7 +253,7 @@ class _CopyButtonState extends State<_CopyButton> {
             Icon(
               _copied ? Icons.check : Icons.copy,
               size: 13,
-              color: _copied ? CofluiColors.puraGreen : Colors.white70,
+              color: _copied ? CofluiColors.accentGreen : Colors.white70,
             ),
             const SizedBox(width: 4),
             Text(

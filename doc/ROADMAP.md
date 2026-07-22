@@ -36,22 +36,26 @@ coflui runs native underneath.
 - ⬜ Navigation-shell guidance sample (master-detail on desktop)
 - ⬜ Breakpoint-driven `grid` hints documented + tested
 
-## Milestone 4 — Richer dynamic components ⬜
+## Milestone 4 — Richer dynamic components 🚧
 
-- ⬜ `image` component (network + asset)
+- ✅ `image` component (network + asset) — via `CofluiIcon` + `image` type
 - ⬜ `list` component (bind an array → repeat a child template)
 - ⬜ Conditional visibility (`visibleWhen` expression on a node)
 - ⬜ Dynamic option sources (fetch dropdown options from an endpoint)
-- ⬜ `icon` / `avatar` components
+- ✅ `icon` / `gradient_bar` / `detail_row` components
+- ✅ `list_tile` component (card-style row)
 
-## Milestone 5 — Full native widget set ⬜
+## Milestone 5 — Full native widget set 🚧
 
 Grow `src/widgets` so it can **fully replace magic_view** project-wide:
 
 - ⬜ `CofluiAutoComplete`
 - ⬜ `CofluiDatePicker` / `CofluiMonthPicker` (styled dialogs)
 - ⬜ `CofluiDialog` rich variants (confirm with input, bottom-sheet)
-- ⬜ `CofluiLayout` (scaffold helpers: app bar, section headers)
+- ✅ `CofluiAppBar`, `CofluiScaffold` (scaffold helpers)
+- ✅ `CofluiListTile`, `CofluiDetailRow` (content widgets)
+- ✅ `CofluiIcon` (universal icon/image: png / svg / url-cached)
+- ✅ `CofluiGradients` + `CofluiGradientBar` (brand gradient presets)
 - ⬜ Theming polish: dark mode tokens, typography presets
 
 ## Milestone 6 — Remote / Server-Driven UI ⬜
@@ -76,5 +80,5 @@ Grow `src/widgets` so it can **fully replace magic_view** project-wide:
 | State mgmt     | `ChangeNotifier`-based; interface for adapters              |
 | Sizing         | raw logical px (no screenutil)                              |
 | Responsive     | breakpoint-driven layout, not element scaling               |
-| Deps           | `flutter` + `gap` only                                      |
+| Deps           | `flutter` + `gap` + `flutter_svg` + `cached_network_image`   |
 | Replacing MV   | grow `Coflui*` widgets first, deprecate magic_view later    |

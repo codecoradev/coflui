@@ -20,6 +20,7 @@ class CofluiButton extends StatelessWidget {
   final CofluiButtonVariant variant;
   final IconData? icon;
   final bool fullWidth;
+  final bool isLoading;
   final EdgeInsetsGeometry? padding;
   final double radius;
 
@@ -31,6 +32,7 @@ class CofluiButton extends StatelessWidget {
     this.variant = CofluiButtonVariant.primary,
     this.icon,
     this.fullWidth = false,
+    this.isLoading = false,
     this.padding,
     this.radius = 10,
   });
@@ -42,7 +44,11 @@ class CofluiButton extends StatelessWidget {
     final shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(radius),
     );
-    final content = child ?? _content(palette.foreground);
+    // Loading state: disable press + swap content for a spinner.
+    final effectiveOnPressed = isLoading ? null : onPressed;
+    final content = isLoading
+        ? _spinner(palette.foreground)
+        : (child ?? _content(palette.foreground));
     final baseStyle = ButtonStyle(
       padding: WidgetStatePropertyAll(padding),
       shape: WidgetStatePropertyAll(shape),
@@ -56,7 +62,7 @@ class CofluiButton extends StatelessWidget {
 
     final btn = switch (variant) {
       CofluiButtonVariant.primary => FilledButton(
-          onPressed: onPressed,
+          onPressed: effectiveOnPressed,
           style: baseStyle.copyWith(
             backgroundColor: WidgetStatePropertyAll(cs.primary),
             foregroundColor: WidgetStatePropertyAll(cs.onPrimary),
@@ -64,7 +70,7 @@ class CofluiButton extends StatelessWidget {
           child: content,
         ),
       CofluiButtonVariant.danger => FilledButton(
-          onPressed: onPressed,
+          onPressed: effectiveOnPressed,
           style: baseStyle.copyWith(
             backgroundColor: WidgetStatePropertyAll(CofluiColors.error),
             foregroundColor: WidgetStatePropertyAll(CofluiColors.onError),
@@ -72,7 +78,7 @@ class CofluiButton extends StatelessWidget {
           child: content,
         ),
       CofluiButtonVariant.outline => OutlinedButton(
-          onPressed: onPressed,
+          onPressed: effectiveOnPressed,
           style: baseStyle.copyWith(
             foregroundColor: WidgetStatePropertyAll(cs.primary),
             side: WidgetStatePropertyAll(
@@ -82,7 +88,7 @@ class CofluiButton extends StatelessWidget {
           child: content,
         ),
       CofluiButtonVariant.ghost => TextButton(
-          onPressed: onPressed,
+          onPressed: effectiveOnPressed,
           style: baseStyle.copyWith(
             foregroundColor: WidgetStatePropertyAll(cs.primary),
           ),
@@ -97,6 +103,15 @@ class CofluiButton extends StatelessWidget {
           : btn,
     );
   }
+
+  Widget _spinner(Color foreground) => SizedBox(
+        width: 20,
+        height: 20,
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+          color: foreground,
+        ),
+      );
 
   Widget _content(Color foreground) {
     final text = label ?? '';
