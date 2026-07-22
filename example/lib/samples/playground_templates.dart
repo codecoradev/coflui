@@ -120,4 +120,55 @@ const playgroundTemplates = <PlaygroundTemplate>[
   }
 ]''',
   ),
+  PlaygroundTemplate(
+    name: 'Halaman Detail',
+    description: 'Halaman approval lengkap: gradient, chip, list, detail_row.',
+    json: r'''[
+  { "id": "accent", "type": "gradient_bar", "props": { "gradient": "accent", "height": 6 } },
+  {
+    "id": "header",
+    "type": "row",
+    "style": { "mainAxis": "spaceBetween", "crossAxis": "center" },
+    "children": [
+      { "id": "doc_no", "type": "heading", "label": "SPP-2026-0048", "style": { "fontSize": 20 } },
+      { "id": "status", "type": "chip", "props": { "label": "Pending", "variant": "warning", "icon": "check_circle" } }
+    ]
+  },
+  { "id": "subtitle", "type": "text", "label": "SPP • 2026-07-22 09:15", "style": { "fontSize": 12, "color": "#666666", "paddingVertical": 4 } },
+  {
+    "id": "detail_card",
+    "type": "card",
+    "style": { "padding": 16 },
+    "children": [
+      { "id": "dr1", "type": "detail_row", "props": { "icon": "domain", "label": "Company", "value": "PT Pura Barutama" } },
+      { "id": "dr2", "type": "detail_row", "props": { "icon": "payments", "label": "Amount", "value": "Rp 42.500.000 (IDR)", "highlight": true } },
+      { "id": "dr3", "type": "detail_row", "props": { "icon": "calendar_today", "label": "Date", "value": "2026-07-22" } }
+    ]
+  },
+  { "id": "appr_title", "type": "heading", "label": "Approval Chain", "style": { "fontSize": 16, "paddingVertical": 8 } },
+  {
+    "id": "approvers",
+    "type": "list",
+    "props": {
+      "items": [
+        { "name": "Andi", "role": "Manager", "icon": "check_circle" },
+        { "name": "Maya", "role": "Finance", "icon": "schedule" }
+      ],
+      "direction": "vertical", "spacing": 6
+    },
+    "children": [
+      { "type": "list_tile", "props": { "title": "{name}", "subtitle": "{role}", "leading": "person", "trailing": "{icon}" } }
+    ]
+  },
+  {
+    "id": "actions",
+    "type": "row",
+    "style": { "gap": 12, "paddingVertical": 12 },
+    "children": [
+      { "id": "reject", "type": "button", "label": "Reject", "props": { "variant": "danger", "icon": "close", "action": "reject" } },
+      { "id": "approve", "type": "button", "label": "Approve", "props": { "variant": "primary", "icon": "check", "action": "approve", "flex": 2 } }
+    ]
+  }
+]''',
+  ),
 ];

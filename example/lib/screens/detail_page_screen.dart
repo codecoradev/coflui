@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:coflui/coflui.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../samples/detail_page_json.dart';
+import '../util/clipboard_util.dart';
 
 /// A FULL document-detail page rendered entirely from JSON via the dynamic
 /// UI engine — no hand-written widgets in the body.
@@ -80,12 +80,12 @@ class _DetailPageScreenState extends State<DetailPageScreen> {
   Future<void> _copyJson() async {
     final json = const JsonEncoder.withIndent('  ')
         .convert(buildDetailJson(dummyApproval));
-    await Clipboard.setData(ClipboardData(text: json));
+    final ok = await copyToClipboard(json);
     if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('JSON copied to clipboard'),
-        duration: Duration(seconds: 2),
+      SnackBar(
+        content: Text(ok ? 'JSON copied to clipboard' : 'Copy failed — select & copy manually'),
+        duration: const Duration(seconds: 2),
       ),
     );
   }
