@@ -1,0 +1,45 @@
+# Deploys the example app to Cloudflare Pages PRODUCTION — but ONLY on a
+# version tag push (v0.3.0, v0.3.1, …). Stable URL shared externally.
+#
+# Setup (one-time):
+#   CF Account Token + Account ID as repo secrets:
+#     CLOUDFLARE_API_TOKEN  — Pages:Edit permission
+#     CLOUDFLARE_ACCOUNT_ID
+#
+# Trigger: push a tag  →  production deploy to coflui.pages.dev
+#   git tag v0.3.0 && git push origin v0.3.0
+name: Deploy (Production — tag)
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+  deployments: write
+
+jobs:
+  deploy-production:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Build example web
+        # --no-tree-shake-icons is required: IconResolver creates IconData at
+        # runtime from JSON, which breaks Flutter's icon font tree-shaker.
+        run: flutter pub get && flutter build web --release --no-tree-shake-icons
+        working-directory: example
+
+      - name: Deploy to Cloudflare Pages (production)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy example/build/web --project-name=coflui --branch=main

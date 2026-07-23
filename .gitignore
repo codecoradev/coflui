@@ -42,3 +42,7 @@ app.*.map.json
 
 # Cora code-review local cache (review history, etc)
 .cora/
+
+# iOS generated (not part of web/package build)
+example/ios/Podfile
+example/ios/Pods/
