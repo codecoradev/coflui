@@ -99,10 +99,25 @@ class WidgetGalleryScreen extends StatelessWidget {
           // ── Card ──────────────────────────────────────────
           const _SectionTitle('CofluiCard'),
           const CofluiCard(
-            title: 'Card Title',
+            title: 'Default Card',
             child: CofluiText(
-              'Card content goes here. This is a styled surface with a '
-              'title, soft shadow, and rounded corners.',
+              'Default style — white surface, soft border, subtle shadow.',
+            ),
+          ),
+          const SizedBox(height: 10),
+          const CofluiCard(
+            title: 'Borderless Card',
+            borderless: true,
+            child: CofluiText(
+              'borderless: true — no border, no shadow. Flat, embeddable.',
+            ),
+          ),
+          const SizedBox(height: 10),
+          CofluiCard(
+            gradient: CofluiGradients.accent,
+            child: const CofluiText(
+              'gradient: CofluiGradients.accent — brand gradient background.',
+              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
             ),
           ),
 

@@ -5,6 +5,7 @@ import 'screens/detail_page_screen.dart';
 import 'screens/dynamic_components_screen.dart';
 import 'screens/dynamic_dashboard_screen.dart';
 import 'screens/dynamic_form_screen.dart';
+import 'screens/icon_catalog_screen.dart';
 import 'screens/playground_screen.dart';
 import 'screens/reference_screen.dart';
 import 'screens/responsive_screen.dart';
@@ -83,6 +84,11 @@ class _ShellState extends State<_Shell> {
       selectedIcon: Icons.dashboard,
     ),
     (
+      label: 'Icons',
+      icon: Icons.grid_view_outlined,
+      selectedIcon: Icons.grid_view,
+    ),
+    (
       label: 'Playground',
       icon: Icons.code_outlined,
       selectedIcon: Icons.code,
@@ -106,6 +112,7 @@ class _ShellState extends State<_Shell> {
     DynamicFormScreen(),
     DynamicDashboardScreen(),
     PlaygroundScreen(),
+    IconCatalogScreen(),
     ReferenceScreen(),
     ResponsiveScreen(),
   ];
