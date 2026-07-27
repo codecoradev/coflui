@@ -36,6 +36,12 @@ class CofluiChip extends StatelessWidget {
   /// Vertical padding. Defaults to 4.
   final double paddingV;
 
+  /// Font size override for the label. Defaults to badge+1.
+  final double? fontSize;
+
+  /// Leading icon size override. Defaults to 13.
+  final double? iconSize;
+
   const CofluiChip(
     this.label, {
     super.key,
@@ -46,6 +52,8 @@ class CofluiChip extends StatelessWidget {
     this.radius = 8,
     this.paddingH = 10,
     this.paddingV = 4,
+    this.fontSize,
+    this.iconSize,
   });
 
   @override
@@ -63,13 +71,13 @@ class CofluiChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            Icon(icon, size: 13, color: fg),
+            Icon(icon, size: iconSize ?? 13, color: fg),
             const SizedBox(width: 4),
           ],
           Text(
             label,
             style: TextStyle(
-              fontSize: CofluiTypography.badge + 1,
+              fontSize: fontSize ?? CofluiTypography.badge + 1,
               fontWeight: FontWeight.w700,
               color: fg,
             ),
