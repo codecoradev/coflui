@@ -1,10 +1,12 @@
 import 'package:coflui/coflui.dart';
 import 'package:flutter/material.dart';
 
-/// A scrollable gallery of every native Coflui widget.
-///
-/// This screen uses hand-written code (not the dynamic engine) to showcase
-/// each `Coflui*` widget in isolation.
+import '../samples/gallery_json.dart';
+import '../widgets/demo_block.dart';
+
+/// A scrollable gallery of every native Coflui widget, **with a "Copy JSON"
+/// button per demo**. Tap copy → paste into the Playground to render the
+/// same widget from JSON instantly.
 class WidgetGalleryScreen extends StatelessWidget {
   const WidgetGalleryScreen({super.key});
 
@@ -15,357 +17,321 @@ class WidgetGalleryScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          // ── Text ──────────────────────────────────────────
-          const _SectionTitle('CofluiText'),
-          const CofluiText(
-            'Body text with default style (14px, onSurfaceVariant).',
-          ),
-          const SizedBox(height: 4),
-          CofluiText(
-            'Custom style — bold 18px primary color.',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: CofluiColors.primary,
-            ),
-          ),
-
-          _Divider(),
-
-          // ── Button ────────────────────────────────────────
-          const _SectionTitle('CofluiButton'),
-          Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            children: [
-              CofluiButton(
-                label: 'Primary',
-                icon: Icons.send,
-                onPressed: () {},
-              ),
-              CofluiButton(
-                label: 'Outline',
-                variant: CofluiButtonVariant.outline,
-                icon: Icons.download,
-                onPressed: () {},
-              ),
-              CofluiButton(
-                label: 'Danger',
-                variant: CofluiButtonVariant.danger,
-                icon: Icons.delete,
-                onPressed: () {},
-              ),
-              CofluiButton(
-                label: 'Ghost',
-                variant: CofluiButtonVariant.ghost,
-                icon: Icons.info,
-                onPressed: () {},
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          CofluiButton(
-            label: 'Full Width Primary',
-            fullWidth: true,
-            onPressed: () {},
-          ),
-
-          _Divider(),
-
-          // ── TextField ─────────────────────────────────────
-          const _SectionTitle('CofluiTextField'),
-          const CofluiTextField(
-            hint: 'Enter your name',
-          ),
-          const SizedBox(height: 8),
-          const CofluiTextField(
-            hint: 'Phone number',
-            keyboardType: TextInputType.phone,
-          ),
-          const SizedBox(height: 8),
-          const CofluiTextField(
-            hint: 'Disabled field',
-            enabled: false,
-          ),
-
-          _Divider(),
-
-          // ── Dropdown ──────────────────────────────────────
-          const _SectionTitle('CofluiDropdown'),
-          _DropdownDemo(),
-
-          _Divider(),
-
-          // ── Card ──────────────────────────────────────────
-          const _SectionTitle('CofluiCard'),
-          const CofluiCard(
-            title: 'Default Card',
-            child: CofluiText(
-              'Default style — white surface, soft border, subtle shadow.',
-            ),
-          ),
-          const SizedBox(height: 10),
-          const CofluiCard(
-            title: 'Borderless Card',
-            borderless: true,
-            child: CofluiText(
-              'borderless: true — no border, no shadow. Flat, embeddable.',
-            ),
-          ),
-          const SizedBox(height: 10),
-          CofluiCard(
-            gradient: CofluiGradients.accent,
-            child: const CofluiText(
-              'gradient: CofluiGradients.accent — brand gradient background.',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          _Divider(),
-
-          // ── Grid ──────────────────────────────────────────
-          const _SectionTitle('CofluiGrid (responsive)'),
-          CofluiText(
-            'Resize the window to see column count change: '
-            'mobile=1, tablet=2, desktop=3.',
-            style: TextStyle(fontSize: 12, color: CofluiColors.onSurfaceVariant),
-          ),
-          const SizedBox(height: 8),
-          CofluiGrid(
-            mobileColumns: 1,
-            tabletColumns: 2,
-            desktopColumns: 3,
-            children: List.generate(6, (i) {
-              return CofluiCard(
-                title: 'Item ${i + 1}',
-                child: CofluiText(
-                  'Grid cell #${i + 1}',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: CofluiColors.onSurfaceVariant,
-                  ),
-                ),
-              );
-            }),
-          ),
-
-          _Divider(),
-
-          // ── Responsive ────────────────────────────────────
-          const _SectionTitle('CofluiResponsive'),
-          CofluiText(
-            'Swaps subtree per device. Resize to see it change.',
-            style: TextStyle(fontSize: 12, color: CofluiColors.onSurfaceVariant),
-          ),
-          const SizedBox(height: 8),
+          // ── Intro hint ──────────────────────────────────────
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: const EdgeInsets.all(12),
+            margin: const EdgeInsets.only(bottom: 16),
             decoration: BoxDecoration(
-              color: CofluiColors.primary.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(12),
+              color: CofluiColors.primary.withValues(alpha: 0.06),
+              borderRadius: BorderRadius.circular(10),
             ),
-            child: CofluiResponsive(
-              mobile: CofluiText(
-                '📱 Mobile layout',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: CofluiColors.primary,
-                ),
-              ),
-              tablet: CofluiText(
-                '📱💻 Tablet layout',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: CofluiColors.secondary,
-                ),
-              ),
-              desktop: CofluiText(
-                '🖥️ Desktop layout',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: CofluiColors.accentGreen,
-                ),
-              ),
-            ),
-          ),
-
-          _Divider(),
-
-          // ── Icon ──────────────────────────────────────────
-          const _SectionTitle('CofluiIcon (auto-detect)'),
-          CofluiText(
-            'One widget, four sources: IconData, .svg asset, .png asset, '
-            'and network URL (disk-cached).',
-            style: TextStyle(fontSize: 12, color: CofluiColors.onSurfaceVariant),
-          ),
-          const SizedBox(height: 12),
-          const Wrap(
-            spacing: 20,
-            runSpacing: 16,
-            crossAxisAlignment: WrapCrossAlignment.center,
-            children: [
-              _IconSample('Material\nIconData', CofluiIcon(Icons.home, size: 40)),
-              _IconSample('SVG asset', CofluiIcon('assets/logo.svg', size: 40)),
-              _IconSample(
-                'Network URL\n(cached)',
-                CofluiIcon(
-                  'https://flutter.dev/assets/images/shared/brand/flutter/logo/logo-mono-61.png',
-                  size: 40,
-                ),
-              ),
-              _IconSample(
-                'Tinted',
-                CofluiIcon(Icons.star, size: 40, color: Color(0xFFFEA72C)),
-              ),
-            ],
-          ),
-
-          _Divider(),
-
-          // ── Gradients ──────────────────────────────────────
-          const _SectionTitle('CofluiGradients / CofluiGradientBar'),
-          CofluiText(
-            'Brand gradient presets (accent / cool / warm) built on overridable '
-            'CofluiColors tokens. Override at boot to rebrand.',
-            style: TextStyle(fontSize: 12, color: CofluiColors.onSurfaceVariant),
-          ),
-          const SizedBox(height: 12),
-          const CofluiGradientBar(gradient: 'accent', height: 8),
-          const SizedBox(height: 8),
-          const CofluiGradientBar(gradient: 'cool', height: 8),
-          const SizedBox(height: 8),
-          const CofluiGradientBar(gradient: 'warm', height: 8),
-          const SizedBox(height: 12),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: CofluiGradients.box(preset: 'accent', radius: 12),
-            child: const CofluiText(
-              'Gradient BoxDecoration helper',
-              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
-
-          _Divider(),
-
-          // ── ListTile ───────────────────────────────────────
-          const _SectionTitle('CofluiListTile'),
-          CofluiListTile(
-            title: 'Budi Santoso',
-            subtitle: 'Senior Developer',
-            leading: const CofluiIcon(Icons.person, size: 24),
-            trailing: const CofluiIcon(Icons.chevron_right, size: 24),
-            onTap: () {},
-          ),
-          CofluiListTile(
-            title: 'Siti Rahma',
-            subtitle: 'Product Manager',
-            leading: const CofluiIcon(Icons.person, size: 24),
-            trailing: const CofluiIcon(Icons.chevron_right, size: 24),
-            onTap: () {},
-          ),
-
-          _Divider(),
-
-          // ── DetailRow ──────────────────────────────────────
-          const _SectionTitle('CofluiDetailRow'),
-          const CofluiCard(
-            child: Column(
+            child: Row(
               children: [
-                CofluiDetailRow(
-                  icon: Icon(Icons.person),
-                  label: 'Name',
-                  value: 'Budi Santoso',
-                ),
-                SizedBox(height: 12),
-                CofluiDetailRow(
-                  icon: Icon(Icons.email),
-                  label: 'Email',
-                  value: 'budi@example.com',
-                ),
-                SizedBox(height: 12),
-                CofluiDetailRow(
-                  icon: Icon(Icons.check_circle),
-                  label: 'Status',
-                  value: 'Approved',
-                  valueColor: Color(0xFF8EC302),
+                Icon(Icons.info_outline,
+                    size: 18, color: CofluiColors.primary),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: CofluiText(
+                    'Every demo below has a copy icon (📋) — tap to copy the '
+                    'equivalent JSON, then paste into the Playground tab.',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: CofluiColors.onSurfaceVariant,
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
 
-          _Divider(),
-
-          // ── Loading button + enhanced TextField ────────────
-          const _SectionTitle('CofluiButton (loading) + CofluiTextField (rich)'),
-          Wrap(
-            spacing: 12,
-            runSpacing: 12,
-            children: [
-              CofluiButton(
-                label: 'Loading',
-                isLoading: true,
-                onPressed: () {},
-              ),
-              CofluiButton(
-                label: 'Loading',
-                variant: CofluiButtonVariant.outline,
-                isLoading: true,
-                onPressed: () {},
-              ),
-            ],
-          ),
-          const SizedBox(height: 12),
-          const CofluiTextField(
-            label: 'Email',
-            hint: 'you@example.com',
-            keyboardType: TextInputType.emailAddress,
-            prefixIcon: Icon(Icons.email),
-          ),
-          const SizedBox(height: 8),
-          const CofluiTextField(
-            label: 'Search',
-            hint: 'Type to search…',
-            prefixIcon: Icon(Icons.search),
-            suffixIcon: Icon(Icons.clear),
-          ),
-
-          _Divider(),
-
-          // ── Dialog ────────────────────────────────────────
-          const _SectionTitle('CofluiDialog'),
-          Wrap(
-            spacing: 12,
-            children: [
-              CofluiButton(
-                label: 'Show Alert',
-                variant: CofluiButtonVariant.outline,
-                onPressed: () => CofluiDialog.alert(
-                  context,
-                  title: 'Information',
-                  body: 'This is a CofluiDialog.alert() call.',
+          // ── Text ────────────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiText',
+            json: textJson,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const CofluiText('Body text with default style (14px).'),
+                const SizedBox(height: 4),
+                CofluiText(
+                  'Custom style — bold 18px primary color.',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: CofluiColors.primary,
+                  ),
                 ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── Button ──────────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiButton',
+            json: buttonJson,
+            child: Wrap(
+              spacing: 12,
+              runSpacing: 12,
+              children: [
+                CofluiButton(label: 'Primary', icon: Icons.send, onPressed: () {}),
+                CofluiButton(label: 'Outline',
+                    variant: CofluiButtonVariant.outline,
+                    icon: Icons.download, onPressed: () {}),
+                CofluiButton(label: 'Danger',
+                    variant: CofluiButtonVariant.danger,
+                    icon: Icons.delete, onPressed: () {}),
+                CofluiButton(label: 'Ghost',
+                    variant: CofluiButtonVariant.ghost,
+                    icon: Icons.info, onPressed: () {}),
+                CofluiButton(label: 'Loading', isLoading: true, onPressed: () {}),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── TextField ───────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiTextField',
+            json: textFieldJson,
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CofluiTextField(label: 'Name', hint: 'Enter your name'),
+                SizedBox(height: 8),
+                CofluiTextField(
+                    label: 'Phone', hint: 'Phone number',
+                    keyboardType: TextInputType.phone),
+                SizedBox(height: 8),
+                CofluiTextField(
+                    label: 'Email', hint: 'you@example.com',
+                    keyboardType: TextInputType.emailAddress,
+                    prefixIcon: Icon(Icons.email)),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── Dropdown ────────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiDropdown',
+            json: dropdownJson,
+            child: const _DropdownDemo(),
+          ),
+          const SizedBox(height: 16),
+
+          // ── Card ────────────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiCard (default / borderless / gradient)',
+            json: cardJson,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const CofluiCard(
+                  title: 'Default',
+                  child: CofluiText(
+                      'Default — white surface, soft border, subtle shadow.'),
+                ),
+                const SizedBox(height: 8),
+                const CofluiCard(
+                  title: 'Borderless',
+                  borderless: true,
+                  child: CofluiText('borderless: true — flat, embeddable.'),
+                ),
+                const SizedBox(height: 8),
+                CofluiCard(
+                  gradient: CofluiGradients.accent,
+                  child: const CofluiText(
+                    'gradient: CofluiGradients.accent',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── Grid ────────────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiGrid (responsive)',
+            description: 'Resize the window: 1 col (mobile) → 2 (tablet) → 3 (desktop).',
+            json: gridJson,
+            child: CofluiGrid(
+              mobileColumns: 1,
+              tabletColumns: 2,
+              desktopColumns: 3,
+              children: List.generate(3, (i) {
+                return CofluiCard(
+                  title: 'Stat ${i + 1}',
+                  child: CofluiText(
+                    ['1.2k', '89%', '+24'][i],
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                      color: CofluiColors.primary,
+                    ),
+                  ),
+                );
+              }),
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── Icon ────────────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiIcon (auto-detect: IconData / SVG / URL / tinted)',
+            json: iconJson,
+            child: const Wrap(
+              spacing: 20,
+              runSpacing: 16,
+              crossAxisAlignment: WrapCrossAlignment.center,
+              children: [
+                _IconCell('Material', CofluiIcon(Icons.home, size: 40)),
+                _IconCell('SVG asset', CofluiIcon('assets/logo.svg', size: 40)),
+                _IconCell(
+                  'Network (cached)',
+                  CofluiIcon(
+                    'https://flutter.dev/assets/images/shared/brand/flutter/logo/logo-mono-61.png',
+                    size: 40,
+                  ),
+                ),
+                _IconCell(
+                  'Tinted',
+                  CofluiIcon(Icons.star, size: 40, color: Color(0xFFFEA72C)),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── Gradients ───────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiGradients / CofluiGradientBar',
+            json: gradientsJson,
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CofluiGradientBar(gradient: 'accent', height: 8),
+                SizedBox(height: 8),
+                CofluiGradientBar(gradient: 'cool', height: 8),
+                SizedBox(height: 8),
+                CofluiGradientBar(gradient: 'warm', height: 8),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── ListTile ────────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiListTile',
+            json: listTileJson,
+            child: Column(
+              children: [
+                CofluiListTile(
+                  title: 'Budi Santoso',
+                  subtitle: 'Senior Developer',
+                  leading: const CofluiIcon(Icons.person, size: 24),
+                  trailing: const CofluiIcon(Icons.chevron_right, size: 24),
+                  onTap: () {},
+                ),
+                CofluiListTile(
+                  title: 'Siti Rahma',
+                  subtitle: 'Product Manager',
+                  leading: const CofluiIcon(Icons.person, size: 24),
+                  trailing: const CofluiIcon(Icons.chevron_right, size: 24),
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── DetailRow ───────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiDetailRow (with value styling)',
+            json: detailRowJson,
+            child: const CofluiCard(
+              child: Column(
+                children: [
+                  CofluiDetailRow(
+                    icon: Icon(Icons.person),
+                    label: 'Name',
+                    value: 'Budi Santoso',
+                  ),
+                  SizedBox(height: 12),
+                  CofluiDetailRow(
+                    icon: Icon(Icons.email),
+                    label: 'Email',
+                    value: 'budi@example.com',
+                  ),
+                  SizedBox(height: 12),
+                  CofluiDetailRow(
+                    icon: Icon(Icons.check_circle),
+                    label: 'Status',
+                    value: 'Approved',
+                    valueColor: Color(0xFF8EC302),
+                    valueFontWeight: FontWeight.bold,
+                  ),
+                ],
               ),
-              CofluiButton(
-                label: 'Show Confirm',
-                variant: CofluiButtonVariant.outline,
-                onPressed: () async {
-                  final ok = await CofluiDialog.confirm(
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── Chip ────────────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiChip (5 variants)',
+            json: chipJson,
+            child: const Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: [
+                CofluiChip('Approved', variant: CofluiChipVariant.success),
+                CofluiChip('Pending', variant: CofluiChipVariant.warning),
+                CofluiChip('Rejected', variant: CofluiChipVariant.danger),
+                CofluiChip('Info', variant: CofluiChipVariant.info),
+                CofluiChip('3', variant: CofluiChipVariant.info, icon: Icons.attach_file),
+              ],
+            ),
+          ),
+          const SizedBox(height: 16),
+
+          // ── Dialog ──────────────────────────────────────────
+          DemoBlock(
+            title: 'CofluiDialog',
+            json: dialogJson,
+            child: Wrap(
+              spacing: 12,
+              children: [
+                CofluiButton(
+                  label: 'Show Alert',
+                  variant: CofluiButtonVariant.outline,
+                  onPressed: () => CofluiDialog.alert(
                     context,
-                    title: 'Confirm Action',
-                    body: 'Are you sure you want to proceed?',
-                  );
-                  if (!context.mounted) return;
-                  CofluiDialog.alert(
-                    context,
-                    title: 'Result',
-                    body: ok ? 'You confirmed.' : 'You cancelled.',
-                  );
-                },
-              ),
-            ],
+                    title: 'Information',
+                    body: 'This is a CofluiDialog.alert() call.',
+                  ),
+                ),
+                CofluiButton(
+                  label: 'Show Confirm',
+                  variant: CofluiButtonVariant.outline,
+                  onPressed: () async {
+                    final ok = await CofluiDialog.confirm(
+                      context,
+                      title: 'Confirm Action',
+                      body: 'Are you sure you want to proceed?',
+                    );
+                    if (!context.mounted) return;
+                    CofluiDialog.alert(
+                      context,
+                      title: 'Result',
+                      body: ok ? 'You confirmed.' : 'You cancelled.',
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
 
           const SizedBox(height: 32),
@@ -377,41 +343,10 @@ class WidgetGalleryScreen extends StatelessWidget {
 
 // ── Helpers ─────────────────────────────────────────────────────────────
 
-class _SectionTitle extends StatelessWidget {
-  final String text;
-  const _SectionTitle(this.text);
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
-      child: CofluiText(
-        text,
-        style: TextStyle(
-          fontSize: CofluiTypography.sectionTitle,
-          fontWeight: FontWeight.bold,
-          color: CofluiColors.onSurface,
-        ),
-      ),
-    );
-  }
-}
-
-class _Divider extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Divider(color: CofluiColors.divider),
-    );
-  }
-}
-
-/// Labeled icon sample cell for the gallery.
-class _IconSample extends StatelessWidget {
+class _IconCell extends StatelessWidget {
   final String caption;
   final Widget icon;
-  const _IconSample(this.caption, this.icon);
+  const _IconCell(this.caption, this.icon);
 
   @override
   Widget build(BuildContext context) {
@@ -445,8 +380,9 @@ class _IconSample extends StatelessWidget {
   }
 }
 
-/// Dropdown demo needs local state.
 class _DropdownDemo extends StatefulWidget {
+  const _DropdownDemo();
+
   @override
   State<_DropdownDemo> createState() => _DropdownDemoState();
 }
@@ -460,10 +396,7 @@ class _DropdownDemoState extends State<_DropdownDemo> {
       value: _value,
       hint: 'Select a fruit',
       items: ['Apple', 'Banana', 'Cherry', 'Durian']
-          .map((f) => DropdownMenuItem(
-                value: f,
-                child: Text(f),
-              ))
+          .map((f) => DropdownMenuItem(value: f, child: Text(f)))
           .toList(),
       onChanged: (v) => setState(() => _value = v),
     );
