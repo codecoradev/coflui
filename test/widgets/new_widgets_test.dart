@@ -143,6 +143,40 @@ void main() {
       expect(find.byType(Icon), findsNothing);
     });
 
+    testWidgets('value styling props honored', (tester) async {
+      await pump(
+        tester,
+        const CofluiDetailRow(
+          label: 'Amount',
+          value: 'Rp 1.000.000',
+          valueFontSize: 20,
+          valueFontWeight: FontWeight.bold,
+          valueColor: Color(0xFF088ECE),
+        ),
+      );
+      final text = tester.widget<Text>(find.text('Rp 1.000.000'));
+      expect(text.style?.fontSize, 20);
+      expect(text.style?.fontWeight, FontWeight.bold);
+      expect(text.style?.color, const Color(0xFF088ECE));
+    });
+
+    testWidgets('valueMaxLines + valueOverflow applied', (tester) async {
+      await pump(
+        tester,
+        const CofluiDetailRow(
+          label: 'Desc',
+          value: 'very long text that should ellipsis at 1 line',
+          valueMaxLines: 1,
+          valueOverflow: TextOverflow.ellipsis,
+        ),
+      );
+      final text = tester.widget<Text>(
+        find.text('very long text that should ellipsis at 1 line'),
+      );
+      expect(text.maxLines, 1);
+      expect(text.overflow, TextOverflow.ellipsis);
+    });
+
     testWidgets('accepts a CofluiIcon (any source) as icon', (tester) async {
       await pump(
         tester,
