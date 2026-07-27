@@ -37,6 +37,15 @@ jobs:
         run: flutter pub get && flutter build web --release --no-tree-shake-icons
         working-directory: example
 
+      - name: Ensure Pages project exists (idempotent)
+        # Creates the project on first run; subsequent runs no-op (it exists).
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages project create coflui --production-branch=main
+        continue-on-error: true  # already exists on subsequent runs
+
       - name: Deploy to Cloudflare Pages (production)
         uses: cloudflare/wrangler-action@v3
         with:

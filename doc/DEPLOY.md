@@ -15,38 +15,24 @@ This repo ships **two GitHub Actions workflows** for a 3-tier deploy strategy:
 
 ## One-time setup
 
-### 1. Create the Cloudflare Pages projects
-
-Run locally (you'll be prompted to authenticate once):
-
-```bash
-# Production project
-npx wrangler pages project create coflui --production-branch=main
-
-# (Optional) separate preview project
-npx wrangler pages project create coflui-preview --production-branch=develop
-```
-
-> The workflows use `--project-name=coflui` for both. CF Pages isolates
-> production vs preview deployments by `--branch` automatically, so a single
-> project is fine. Create `coflui-preview` only if you want a fully separate
-> domain.
-
-### 2. Create the API token
+### 1. Create the API token
 
 1. Go to **dash.cloudflare.com → My Profile → API Tokens → Create Token**
 2. Use the **"Edit Cloudflare Workers"** template, or a custom token with:
    - Account → Cloudflare Pages → **Edit**
 3. Copy the token value.
 
-### 3. Add repository secrets
+### 2. Add repository secrets
 
 In **GitHub → repo → Settings → Secrets and variables → Actions → New secret**:
 
 | Secret name | Value |
 |-------------|-------|
-| `CLOUDFLARE_API_TOKEN` | (token from step 2) |
+| `CLOUDFLARE_API_TOKEN` | (token from step 1) |
 | `CLOUDFLARE_ACCOUNT_ID` | Your CF account ID (find it in the CF dashboard URL or Pages project) |
+
+> ℹ️ The Pages project (`coflui`) is **created automatically** on the first
+> workflow run — no need to run `wrangler pages project create` manually.
 
 ---
 
