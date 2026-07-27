@@ -1,21 +1,25 @@
 import 'package:coflui/coflui.dart';
 import 'package:flutter/material.dart';
 
-import 'screens/detail_page_screen.dart';
-import 'screens/dynamic_components_screen.dart';
-import 'screens/dynamic_dashboard_screen.dart';
-import 'screens/dynamic_form_screen.dart';
+import 'screens/guide_screen.dart';
+import 'screens/icon_catalog_screen.dart';
 import 'screens/playground_screen.dart';
 import 'screens/reference_screen.dart';
-import 'screens/responsive_screen.dart';
+import 'screens/showcase_screen.dart';
 import 'screens/widget_gallery_screen.dart';
 
 /// Coflui example app entry point.
 ///
-/// A simple shell with a NavigationRail (desktop/tablet) or BottomNavigationBar
-/// (mobile) — itself demonstrating responsive layout.
+/// Navigation is organized into **6 tabs by learning path**:
+/// 1. **Guide** — start here (tutorials, JSON conventions, clone patterns)
+/// 2. **Gallery** — native widget showcase
+/// 3. **Showcase** — full dynamic-UI pages (Detail, Components, Form, Dashboard)
+/// 4. **Playground** — live JSON → UI editor
+/// 5. **Icons** — searchable icon catalog (tap to copy)
+/// 6. **Reference** — JSON schema reference
+///
+/// The Responsive demo lives inside Gallery.
 void main() {
-  // Register the dynamic UI engine's default builders once at app boot.
   DynamicUIBootstrap.registerDefaults();
   runApp(const CofluiExampleApp());
 }
@@ -45,7 +49,6 @@ class CofluiExampleApp extends StatelessWidget {
   }
 }
 
-/// Responsive shell: NavigationRail on tablet/desktop, BottomNav on mobile.
 class _Shell extends StatefulWidget {
   const _Shell();
 
@@ -58,29 +61,19 @@ class _ShellState extends State<_Shell> {
 
   static const _destinations = [
     (
+      label: 'Guide',
+      icon: Icons.school_outlined,
+      selectedIcon: Icons.school,
+    ),
+    (
       label: 'Gallery',
       icon: Icons.widgets_outlined,
       selectedIcon: Icons.widgets,
     ),
     (
-      label: 'Detail',
-      icon: Icons.receipt_long_outlined,
-      selectedIcon: Icons.receipt_long,
-    ),
-    (
-      label: 'Components',
-      icon: Icons.extension_outlined,
-      selectedIcon: Icons.extension,
-    ),
-    (
-      label: 'Form',
-      icon: Icons.description_outlined,
-      selectedIcon: Icons.description,
-    ),
-    (
-      label: 'Dashboard',
-      icon: Icons.dashboard_outlined,
-      selectedIcon: Icons.dashboard,
+      label: 'Showcase',
+      icon: Icons.view_carousel_outlined,
+      selectedIcon: Icons.view_carousel,
     ),
     (
       label: 'Playground',
@@ -88,31 +81,28 @@ class _ShellState extends State<_Shell> {
       selectedIcon: Icons.code,
     ),
     (
+      label: 'Icons',
+      icon: Icons.grid_view_outlined,
+      selectedIcon: Icons.grid_view,
+    ),
+    (
       label: 'Reference',
       icon: Icons.menu_book_outlined,
       selectedIcon: Icons.menu_book,
     ),
-    (
-      label: 'Responsive',
-      icon: Icons.devices_outlined,
-      selectedIcon: Icons.devices,
-    ),
   ];
 
   static const _screens = <Widget>[
+    GuideScreen(),
     WidgetGalleryScreen(),
-    DetailPageScreen(),
-    DynamicComponentsScreen(),
-    DynamicFormScreen(),
-    DynamicDashboardScreen(),
+    ShowcaseScreen(),
     PlaygroundScreen(),
+    IconCatalogScreen(),
     ReferenceScreen(),
-    ResponsiveScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    // Use Coflui's own breakpoint to switch nav style.
     final useRail = !CofluiBreakpoints.isMobile(context);
 
     if (useRail) {

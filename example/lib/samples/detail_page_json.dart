@@ -62,6 +62,7 @@ List<Map<String, dynamic>> buildDetailJson(Map<String, dynamic> d) {
     {
       'id': 'detail_card',
       'type': 'card',
+      'props': {'borderless': true},
       'style': {'padding': 16},
       'children': [
         {
