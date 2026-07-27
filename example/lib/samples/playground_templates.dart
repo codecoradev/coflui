@@ -138,6 +138,7 @@ const playgroundTemplates = <PlaygroundTemplate>[
   {
     "id": "detail_card",
     "type": "card",
+    "props": { "borderless": true },
     "style": { "padding": 16 },
     "children": [
       { "id": "dr1", "type": "detail_row", "props": { "icon": "domain", "label": "Company", "value": "PT Pura Barutama" } },
