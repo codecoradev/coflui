@@ -161,6 +161,46 @@ void main() {
       expect(icon.size, 32);
     });
 
+    testWidgets('detailRow value styling via JSON props', (tester) async {
+      await _pumpDynamic(tester, [
+        {
+          'id': 'd',
+          'type': 'detail_row',
+          'props': {
+            'icon': 'payments',
+            'label': 'Amount',
+            'value': 'Rp 1.000.000',
+            'valueFontSize': 20,
+            'valueFontWeight': 'bold',
+            'valueColor': '#088ECE',
+          },
+        },
+      ]);
+      final text = tester.widget<Text>(find.text('Rp 1.000.000'));
+      expect(text.style?.fontSize, 20);
+      expect(text.style?.fontWeight, FontWeight.bold);
+      expect(text.style?.color, const Color(0xFF088ECE));
+    });
+
+    testWidgets('detailRow valueMaxLines + valueOverflow via JSON', (tester) async {
+      await _pumpDynamic(tester, [
+        {
+          'id': 'd',
+          'type': 'detail_row',
+          'props': {
+            'icon': 'description',
+            'label': 'Desc',
+            'value': 'long text that should ellipsis',
+            'valueMaxLines': 1,
+            'valueOverflow': 'ellipsis',
+          },
+        },
+      ]);
+      final text = tester.widget<Text>(find.text('long text that should ellipsis'));
+      expect(text.maxLines, 1);
+      expect(text.overflow, TextOverflow.ellipsis);
+    });
+
     testWidgets('detailRow renders without icon when omitted', (tester) async {
       await _pumpDynamic(tester, [
         {
