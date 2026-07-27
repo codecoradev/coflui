@@ -4,6 +4,7 @@ import 'package:coflui/src/dynamic/resolvers/style_resolver.dart';
 import 'package:coflui/src/dynamic/widgets/dynamic_ui_widget.dart';
 import 'package:coflui/src/theme/coflui_colors.dart';
 import 'package:coflui/src/widgets/coflui_card.dart';
+import 'package:coflui/src/widgets/coflui_gradients.dart';
 import 'package:coflui/src/widgets/coflui_grid.dart';
 import 'package:flutter/material.dart';
 
@@ -150,6 +151,11 @@ class ContainerBuilders {
       borderColor: s.borderColor ?? const Color(0xFFEDEFF3),
       borderWidth: s.borderWidth ?? 1,
       elevation: s.elevation ?? 6,
+      borderless: c.props['borderless'] == true,
+      gradient: c.props['gradient'] != null
+          ? _gradientOf(c.props['gradient'])
+          : null,
+      maxWidth: _toDouble(c.props['maxWidth']),
       child: content,
     );
   }
@@ -163,4 +169,14 @@ class ContainerBuilders {
     if (s.expand == true) return Expanded(child: child);
     return child;
   }
+
+  /// Resolves a preset name ("accent"/"cool"/"warm") into a Gradient.
+  static Gradient _gradientOf(dynamic v) =>
+      CofluiGradients.presetOf(v.toString());
+}
+
+double? _toDouble(dynamic v) {
+  if (v == null) return null;
+  if (v is num) return v.toDouble();
+  return double.tryParse(v.toString());
 }

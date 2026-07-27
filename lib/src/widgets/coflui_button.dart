@@ -24,6 +24,27 @@ class CofluiButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final double radius;
 
+  /// Override the button's background color (takes precedence over variant).
+  final Color? backgroundColor;
+
+  /// Override the text/icon color (takes precedence over variant).
+  final Color? foregroundColor;
+
+  /// Stroke color for the outline variant.
+  final Color? borderColor;
+
+  /// Stroke width for the outline variant. Defaults to 1.2.
+  final double borderWidth;
+
+  /// Material elevation (shadow). Defaults to 0 (flat Material 3 look).
+  final double elevation;
+
+  /// Minimum width — useful for icon-only or compact buttons.
+  final double? minWidth;
+
+  /// Fixed height. Defaults to Material's standard (~40-48).
+  final double? fixedHeight;
+
   const CofluiButton({
     super.key,
     this.onPressed,
@@ -35,22 +56,38 @@ class CofluiButton extends StatelessWidget {
     this.isLoading = false,
     this.padding,
     this.radius = 10,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.borderColor,
+    this.borderWidth = 1.2,
+    this.elevation = 0,
+    this.minWidth,
+    this.fixedHeight,
   });
 
   @override
   Widget build(BuildContext context) {
     final cs = Theme.of(context).colorScheme;
     final palette = _Palette.of(variant, cs);
+    // Custom color overrides take precedence over variant palette.
+    final effectiveBackground = backgroundColor ?? palette.background;
+    final effectiveForeground = foregroundColor ?? palette.foreground;
+    final effectiveStroke = borderColor ?? palette.stroke;
     final shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(radius),
     );
     // Loading state: disable press + swap content for a spinner.
     final effectiveOnPressed = isLoading ? null : onPressed;
     final content = isLoading
-        ? _spinner(palette.foreground)
-        : (child ?? _content(palette.foreground));
+        ? _spinner(effectiveForeground)
+        : (child ?? _content(effectiveForeground));
     final baseStyle = ButtonStyle(
       padding: WidgetStatePropertyAll(padding),
+      minimumSize: WidgetStatePropertyAll(Size(
+        minWidth ?? 0,
+        fixedHeight ?? 0,
+      )),
+      elevation: WidgetStatePropertyAll(elevation),
       shape: WidgetStatePropertyAll(shape),
       textStyle: const WidgetStatePropertyAll(
         TextStyle(
@@ -64,25 +101,33 @@ class CofluiButton extends StatelessWidget {
       CofluiButtonVariant.primary => FilledButton(
           onPressed: effectiveOnPressed,
           style: baseStyle.copyWith(
-            backgroundColor: WidgetStatePropertyAll(cs.primary),
-            foregroundColor: WidgetStatePropertyAll(cs.onPrimary),
+            backgroundColor:
+                WidgetStatePropertyAll(effectiveBackground ?? cs.primary),
+            foregroundColor: WidgetStatePropertyAll(effectiveForeground),
           ),
           child: content,
         ),
       CofluiButtonVariant.danger => FilledButton(
           onPressed: effectiveOnPressed,
           style: baseStyle.copyWith(
-            backgroundColor: WidgetStatePropertyAll(CofluiColors.error),
-            foregroundColor: WidgetStatePropertyAll(CofluiColors.onError),
+            backgroundColor:
+                WidgetStatePropertyAll(effectiveBackground ?? CofluiColors.error),
+            foregroundColor:
+                WidgetStatePropertyAll(effectiveForeground),
           ),
           child: content,
         ),
       CofluiButtonVariant.outline => OutlinedButton(
           onPressed: effectiveOnPressed,
           style: baseStyle.copyWith(
-            foregroundColor: WidgetStatePropertyAll(cs.primary),
+            backgroundColor:
+                WidgetStatePropertyAll(effectiveBackground),
+            foregroundColor: WidgetStatePropertyAll(effectiveForeground),
             side: WidgetStatePropertyAll(
-              BorderSide(color: cs.primary, width: 1.2),
+              BorderSide(
+                color: effectiveStroke ?? cs.primary,
+                width: borderWidth,
+              ),
             ),
           ),
           child: content,

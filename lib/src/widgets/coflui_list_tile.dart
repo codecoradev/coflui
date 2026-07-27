@@ -38,6 +38,15 @@ class CofluiListTile extends StatelessWidget {
   /// Corner radius.
   final double radius;
 
+  /// Material elevation (shadow). Defaults to 0.
+  final double elevation;
+
+  /// Border color. Rendered only when [borderWidth] > 0.
+  final Color? borderColor;
+
+  /// Border width. 0 = no border. Defaults to 0.
+  final double borderWidth;
+
   const CofluiListTile({
     super.key,
     required this.title,
@@ -49,6 +58,9 @@ class CofluiListTile extends StatelessWidget {
     this.contentPadding = const EdgeInsets.all(12),
     this.color,
     this.radius = 12,
+    this.elevation = 0,
+    this.borderColor,
+    this.borderWidth = 0,
   });
 
   @override
@@ -60,48 +72,60 @@ class CofluiListTile extends StatelessWidget {
           padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
       child: Material(
         color: color ?? theme.colorScheme.surfaceContainerLow,
+        elevation: elevation,
         borderRadius: BorderRadius.circular(radius),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(radius),
-          child: Padding(
-            padding: contentPadding,
-            child: Row(
-              children: [
-                if (leading != null) ...[
-                  leading!,
-                  const SizedBox(width: 12),
-                ],
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: TextStyle(
-                          fontSize: CofluiTypography.itemTitle,
-                          fontWeight: FontWeight.w600,
-                          color: CofluiColors.onSurface,
-                        ),
-                      ),
-                      if (subtitle != null) ...[
-                        const SizedBox(height: 2),
+        child: Container(
+          decoration: borderWidth > 0
+              ? BoxDecoration(
+                  borderRadius: BorderRadius.circular(radius),
+                  border: Border.all(
+                    color: borderColor ?? CofluiColors.border,
+                    width: borderWidth,
+                  ),
+                )
+              : null,
+          child: InkWell(
+            onTap: onTap,
+            borderRadius: BorderRadius.circular(radius),
+            child: Padding(
+              padding: contentPadding,
+              child: Row(
+                children: [
+                  if (leading != null) ...[
+                    leading!,
+                    const SizedBox(width: 12),
+                  ],
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                         Text(
-                          subtitle!,
+                          title,
                           style: TextStyle(
-                            fontSize: CofluiTypography.caption,
-                            color: CofluiColors.onSurfaceVariant,
+                            fontSize: CofluiTypography.itemTitle,
+                            fontWeight: FontWeight.w600,
+                            color: CofluiColors.onSurface,
                           ),
                         ),
+                        if (subtitle != null) ...[
+                          const SizedBox(height: 2),
+                          Text(
+                            subtitle!,
+                            style: TextStyle(
+                              fontSize: CofluiTypography.caption,
+                              color: CofluiColors.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
                       ],
-                    ],
+                    ),
                   ),
-                ),
-                if (trailing != null) ...[
-                  const SizedBox(width: 8),
-                  trailing!,
+                  if (trailing != null) ...[
+                    const SizedBox(width: 8),
+                    trailing!,
+                  ],
                 ],
-              ],
+              ),
             ),
           ),
         ),
