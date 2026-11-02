@@ -45,8 +45,8 @@ CofluiCard(
   ),
 )''',
           ),
-          SizedBox(height: 16),
-          _Section(
+          const SizedBox(height: 16),
+          const _Section(
             icon: Icons.code,
             title: '2. Dynamic UI (JSON-driven)',
             body: 'Render an entire UI tree from JSON. Register builders once, '
@@ -66,8 +66,8 @@ final ctrl = CofluiFormController()
 
 DynamicUIWidget(ctrl.components.first, controller: ctrl)''',
           ),
-          SizedBox(height: 16),
-          _Section(
+          const SizedBox(height: 16),
+          const _Section(
             icon: Icons.category,
             title: '3. Component Types',
             body: 'Every type maps to a builder. Use aliases freely '
@@ -93,8 +93,8 @@ DynamicUIWidget(ctrl.components.first, controller: ctrl)''',
 // Composite:
 "list"   // repeat a child template over items[]''',
           ),
-          SizedBox(height: 16),
-          _Section(
+          const SizedBox(height: 16),
+          const _Section(
             icon: Icons.tune,
             title: '4. props vs style (IMPORTANT)',
             body: 'A common gotcha: component-specific config goes in `props`, '
@@ -115,8 +115,8 @@ DynamicUIWidget(ctrl.components.first, controller: ctrl)''',
   "children": [...]
 }''',
           ),
-          SizedBox(height: 16),
-          _Section(
+          const SizedBox(height: 16),
+          const _Section(
             icon: Icons.repeat,
             title: '5. list — Repeat Over Arrays',
             body: 'The `list` component clones its first child for each item. '
@@ -144,8 +144,8 @@ DynamicUIWidget(ctrl.components.first, controller: ctrl)''',
   ]
 }''',
           ),
-          SizedBox(height: 16),
-          _Section(
+          const SizedBox(height: 16),
+          const _Section(
             icon: Icons.image,
             title: '6. Icons — Any Source',
             body: 'Icon props accept Material names, code-points, SVG assets, '
@@ -162,8 +162,8 @@ DynamicUIWidget(ctrl.components.first, controller: ctrl)''',
 // Network image (disk-cached):
 {"icon": "https://example.com/logo.png"}''',
           ),
-          SizedBox(height: 16),
-          _Section(
+          const SizedBox(height: 16),
+          const _Section(
             icon: Icons.content_copy,
             title: '7. Clone-Ready Detail Page',
             body: 'A full detail page is just a JSON template + a data map. '
@@ -174,9 +174,9 @@ final json = buildDetailJson(apiResponse);
 final ctrl = CofluiFormController()..loadFromJson(json);
 // → render ctrl.components via DynamicUIWidget''',
           ),
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
           Padding(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: CofluiText(
               '💡 Tip: Open the Playground tab to experiment with JSON in '
               'real-time. Load a template, tweak, and hit Render. Copy JSON '
@@ -188,7 +188,7 @@ final ctrl = CofluiFormController()..loadFromJson(json);
               ),
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
         ],
       ),
     );
@@ -290,11 +290,11 @@ class _CodeBlockState extends State<_CodeBlock> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
+        final messenger = ScaffoldMessenger.of(context);
         await copyToClipboard(widget.code);
         if (!mounted) return;
         setState(() => _copied = true);
-        if (!mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
+        messenger.showSnackBar(
           const SnackBar(
             content: Text('Copied to clipboard'),
             duration: Duration(milliseconds: 1200),

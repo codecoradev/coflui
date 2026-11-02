@@ -91,10 +91,10 @@ class WidgetGalleryScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // ── TextField ───────────────────────────────────────
-          DemoBlock(
+          const DemoBlock(
             title: 'CofluiTextField',
             json: textFieldJson,
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 CofluiTextField(label: 'Name', hint: 'Enter your name'),
@@ -113,10 +113,10 @@ class WidgetGalleryScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // ── Dropdown ────────────────────────────────────────
-          DemoBlock(
+          const DemoBlock(
             title: 'CofluiDropdown',
             json: dropdownJson,
-            child: const _DropdownDemo(),
+            child: _DropdownDemo(),
           ),
           const SizedBox(height: 16),
 
@@ -179,10 +179,10 @@ class WidgetGalleryScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // ── Icon ────────────────────────────────────────────
-          DemoBlock(
+          const DemoBlock(
             title: 'CofluiIcon (auto-detect: IconData / SVG / URL / tinted)',
             json: iconJson,
-            child: const Wrap(
+            child: Wrap(
               spacing: 20,
               runSpacing: 16,
               crossAxisAlignment: WrapCrossAlignment.center,
@@ -206,10 +206,10 @@ class WidgetGalleryScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // ── Gradients ───────────────────────────────────────
-          DemoBlock(
+          const DemoBlock(
             title: 'CofluiGradients / CofluiGradientBar',
             json: gradientsJson,
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 CofluiGradientBar(gradient: 'accent', height: 8),
@@ -248,10 +248,10 @@ class WidgetGalleryScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // ── DetailRow ───────────────────────────────────────
-          DemoBlock(
+          const DemoBlock(
             title: 'CofluiDetailRow (with value styling)',
             json: detailRowJson,
-            child: const CofluiCard(
+            child: CofluiCard(
               child: Column(
                 children: [
                   CofluiDetailRow(
@@ -280,10 +280,10 @@ class WidgetGalleryScreen extends StatelessWidget {
           const SizedBox(height: 16),
 
           // ── Chip ────────────────────────────────────────────
-          DemoBlock(
+          const DemoBlock(
             title: 'CofluiChip (5 variants)',
             json: chipJson,
-            child: const Wrap(
+            child: Wrap(
               spacing: 8,
               runSpacing: 8,
               children: [

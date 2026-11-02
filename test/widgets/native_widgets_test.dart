@@ -22,7 +22,7 @@ void main() {
 
     testWidgets('applies custom style', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: CofluiText(
               'Custom',
@@ -226,11 +226,11 @@ void main() {
 
     testWidgets('applies custom radius', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: CofluiCard(
               radius: 20,
-              child: const SizedBox(width: 100, height: 50),
+              child: SizedBox(width: 100, height: 50),
             ),
           ),
         ),
@@ -245,16 +245,16 @@ void main() {
   group('CofluiGrid', () {
     testWidgets('renders all children', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: SizedBox(
               width: 400,
               child: CofluiGrid(
                 mobileColumns: 2,
                 children: [
-                  Container(child: const Text('A')),
-                  Container(child: const Text('B')),
-                  Container(child: const Text('C')),
+                  Text('A'),
+                  Text('B'),
+                  Text('C'),
                 ],
               ),
             ),
@@ -269,7 +269,7 @@ void main() {
     testWidgets('uses 1 column on mobile width', (tester) async {
       // 320px = mobile
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: SizedBox(
               width: 320,
@@ -277,7 +277,7 @@ void main() {
                 mobileColumns: 1,
                 tabletColumns: 3,
                 desktopColumns: 4,
-                children: const [Text('X')],
+                children: [Text('X')],
               ),
             ),
           ),
@@ -290,12 +290,12 @@ void main() {
     testWidgets('falls back to MediaQuery when constraints unbounded',
         (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: Center(
               child: CofluiGrid(
                 mobileColumns: 1,
-                children: const [Text('M')],
+                children: [Text('M')],
               ),
             ),
           ),
@@ -430,11 +430,11 @@ void main() {
   group('CofluiDropdown', () {
     testWidgets('renders hint text', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: CofluiDropdown<String>(
               hint: 'Choose fruit',
-              items: const [],
+              items: [],
             ),
           ),
         ),
@@ -444,13 +444,13 @@ void main() {
 
     testWidgets('renders menu items in the dropdown button', (tester) async {
       await tester.pumpWidget(
-        MaterialApp(
+        const MaterialApp(
           home: Scaffold(
             body: SizedBox(
               width: 300,
-              child: const CofluiDropdown<String>(
+              child: CofluiDropdown<String>(
                 value: 'a',
-                items: const [
+                items: [
                   DropdownMenuItem(value: 'a', child: Text('Apple')),
                   DropdownMenuItem(value: 'b', child: Text('Banana')),
                 ],

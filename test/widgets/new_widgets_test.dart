@@ -61,10 +61,10 @@ void main() {
     testWidgets('renders prefix and suffix icons', (tester) async {
       await pump(
         tester,
-        CofluiTextField(
+        const CofluiTextField(
           hint: 'search',
-          prefixIcon: const Icon(Icons.search),
-          suffixIcon: const Icon(Icons.clear),
+          prefixIcon: Icon(Icons.search),
+          suffixIcon: Icon(Icons.clear),
         ),
       );
       expect(find.byIcon(Icons.search), findsOneWidget);
@@ -91,11 +91,11 @@ void main() {
     testWidgets('renders title + subtitle + leading + trailing', (tester) async {
       await pump(
         tester,
-        CofluiListTile(
+        const CofluiListTile(
           title: 'Budi',
           subtitle: 'Approved',
-          leading: const Icon(Icons.person),
-          trailing: const Icon(Icons.chevron_right),
+          leading: Icon(Icons.person),
+          trailing: Icon(Icons.chevron_right),
         ),
       );
       expect(find.text('Budi'), findsOneWidget);
@@ -123,8 +123,8 @@ void main() {
     testWidgets('renders icon + label + value', (tester) async {
       await pump(
         tester,
-        CofluiDetailRow(
-          icon: const Icon(Icons.calendar_today),
+        const CofluiDetailRow(
+          icon: Icon(Icons.calendar_today),
           label: 'Date',
           value: '2026-07-22',
         ),

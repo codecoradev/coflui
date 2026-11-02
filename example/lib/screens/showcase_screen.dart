@@ -87,7 +87,7 @@ class _ShowcaseScreenState extends State<ShowcaseScreen> {
             tabs: [for (final t in _tabs) Tab(text: t)],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: _screens,
         ),
       ),

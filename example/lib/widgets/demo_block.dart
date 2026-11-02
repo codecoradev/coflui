@@ -93,10 +93,11 @@ class _CopyJsonButtonState extends State<_CopyJsonButton> {
       onPressed: () async {
         final pretty =
             const JsonEncoder.withIndent('  ').convert(widget.json);
+        final messenger = ScaffoldMessenger.of(context);
         await copyToClipboard(pretty);
         if (!mounted) return;
         setState(() => _copied = true);
-        ScaffoldMessenger.of(context).showSnackBar(
+        messenger.showSnackBar(
           const SnackBar(
             content: Text('JSON copied — paste into Playground'),
             duration: Duration(seconds: 2),

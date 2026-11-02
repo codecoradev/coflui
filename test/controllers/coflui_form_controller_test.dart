@@ -1,5 +1,4 @@
 import 'package:coflui/src/dynamic/controllers/coflui_form_controller.dart';
-import 'package:coflui/src/dynamic/models/ui_component.dart';
 import 'package:coflui/src/dynamic/registry/widget_registry.dart';
 import 'package:flutter_test/flutter_test.dart';
 
