@@ -34,8 +34,7 @@ class InputBuilders {
 
   /// Builds a [Checkbox] from a JSON `checkbox` component.
   static Widget checkbox(BuildContext ctx, UIComponent c, controller) =>
-      _SwitchBuilder(
-          component: c, controller: controller, useCheckbox: true);
+      _SwitchBuilder(component: c, controller: controller, useCheckbox: true);
 }
 
 // ---------------------------------------------------------------------------
@@ -95,8 +94,7 @@ class _TextFieldBuilderState extends State<_TextFieldBuilder> {
   Widget build(BuildContext context) {
     final c = widget.component;
     final props = c.props;
-    final maxLines =
-        props['maxLines'] is int ? props['maxLines'] as int : null;
+    final maxLines = props['maxLines'] is int ? props['maxLines'] as int : null;
     final keyboardType = _keyboardOf(props['keyboard']);
     final disabled = widget.controller.readOnly ||
         (props['enabled'] is bool ? !(props['enabled'] as bool) : false);
@@ -192,8 +190,7 @@ class _DropdownBuilderState extends State<_DropdownBuilder> {
         CofluiDropdown<dynamic>(
           value: _value,
           hint: (c.props['hint'] as String?) ?? 'Pilih ${c.label ?? ''}',
-          enabled: !(c.props['enabled'] == false ||
-              widget.controller.readOnly),
+          enabled: !(c.props['enabled'] == false || widget.controller.readOnly),
           items: options
               .map((o) => DropdownMenuItem<dynamic>(
                     value: o['value'],
@@ -252,31 +249,41 @@ class _SwitchBuilderState extends State<_SwitchBuilder> {
   Widget build(BuildContext context) {
     final c = widget.component;
     final disabled = widget.controller.readOnly;
-    return InkWell(
-      onTap: disabled ? null : _toggle,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 4),
-        child: Row(
-          children: [
-            widget.useCheckbox
-                ? Checkbox(
-                    value: _value,
-                    onChanged: disabled ? null : (_) => _toggle(),
-                  )
-                : Switch(
-                    value: _value,
-                    onChanged: disabled ? null : (_) => _toggle(),
+    // MergeSemantics folds the label into the checkbox/switch node so screen
+    // readers announce "Label, checkbox" instead of an unnamed control; the
+    // visible Text is excluded to avoid reading the label twice.
+    return MergeSemantics(
+      child: Semantics(
+        label: c.label,
+        child: InkWell(
+          onTap: disabled ? null : _toggle,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Row(
+              children: [
+                widget.useCheckbox
+                    ? Checkbox(
+                        value: _value,
+                        onChanged: disabled ? null : (_) => _toggle(),
+                      )
+                    : Switch(
+                        value: _value,
+                        onChanged: disabled ? null : (_) => _toggle(),
+                      ),
+                Expanded(
+                  child: ExcludeSemantics(
+                    child: CofluiText(
+                      c.label ?? '',
+                      style: TextStyle(
+                        fontSize: CofluiTypography.body,
+                        color: CofluiColors.onSurface,
+                      ),
+                    ),
                   ),
-            Expanded(
-              child: CofluiText(
-                c.label ?? '',
-                style: TextStyle(
-                  fontSize: CofluiTypography.body,
-                  color: CofluiColors.onSurface,
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -307,8 +314,8 @@ class _DatePickerBuilderState extends State<_DatePickerBuilder> {
   @override
   void initState() {
     super.initState();
-    final raw =
-        widget.controller.getValue(widget.component.id) ?? widget.component.value;
+    final raw = widget.controller.getValue(widget.component.id) ??
+        widget.component.value;
     _value = _parseDate(raw);
     if (_value != null) {
       widget.controller.setValue(widget.component.id, _format(_value));
@@ -341,8 +348,7 @@ class _DatePickerBuilderState extends State<_DatePickerBuilder> {
         InkWell(
           onTap: disabled ? null : () => _pick(context),
           child: Container(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 14),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: CofluiColors.inputBorder),

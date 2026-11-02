@@ -36,7 +36,7 @@ nest children → unlimited depth.
 | `column`  | `mainAxisSize: "max"\|min`                                           | vertical stack; cross-axis defaults to `stretch` |
 | `row`     | —                                                                     | children auto-wrapped in `Flexible`/`Expanded` (use `props.flex` on a child for `Expanded`) |
 | `grid`    | `mobileColumns`, `tabletColumns`, `desktopColumns`, `spacing`, `runSpacing` | responsive; column count derived from breakpoint |
-| `card`    | —                                                                     | styled surface; `label` becomes the card title |
+| `card`    | —                                                                     | styled surface; `label` becomes the card title. `style.padding` / `paddingHorizontal` / `paddingVertical` (default 14), `style.gap` between children (default 10), `props.titleGap` title→content gap (defaults to `style.gap`, then 10) |
 | `section` | —                                                                     | alias of `card` for form grouping |
 
 ### Display
@@ -44,7 +44,7 @@ nest children → unlimited depth.
 | type      | notes |
 |-----------|-------|
 | `text`    | body text; uses `value` else `label` |
-| `heading` | larger bold text |
+| `heading` | larger bold text; `props.paddingTop` (default 4) |
 | `divider` | horizontal rule; `style.gap` = height |
 
 ### Inputs

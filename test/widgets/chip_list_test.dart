@@ -19,7 +19,7 @@ void main() {
       final decoration = container.decoration as BoxDecoration;
       // Green tint → hue near accentGreen
       expect(decoration.color, isNotNull);
-      expect(decoration.color!.green, greaterThan(decoration.color!.red));
+      expect(decoration.color!.g, greaterThan(decoration.color!.r));
     });
 
     testWidgets('renders leading icon when provided', (tester) async {

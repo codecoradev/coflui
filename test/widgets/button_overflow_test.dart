@@ -35,14 +35,14 @@ void main() {
                 children: [
                   // Reset — Expanded(flex: 1), same as the row builder produces
                   // for `props.flex: 1`.
-                  Expanded(
+                  const Expanded(
                     flex: 1,
                     child: CofluiButton(
                       label: 'Reset',
                       variant: CofluiButtonVariant.outline,
                       icon: Icons.refresh,
                       fullWidth: false,
-                      padding: const EdgeInsets.symmetric(
+                      padding: EdgeInsets.symmetric(
                         horizontal: 16,
                         vertical: 12,
                       ),
@@ -55,12 +55,12 @@ void main() {
                     child: LayoutBuilder(
                       builder: (context, c) => SizedBox(
                         width: c.maxWidth,
-                        child: CofluiButton(
+                        child: const CofluiButton(
                           label: 'Kirim Pengajuan',
                           variant: CofluiButtonVariant.primary,
                           icon: Icons.send,
                           fullWidth: false,
-                          padding: const EdgeInsets.symmetric(
+                          padding: EdgeInsets.symmetric(
                             horizontal: 16,
                             vertical: 12,
                           ),

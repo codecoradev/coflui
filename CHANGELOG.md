@@ -1,3 +1,26 @@
+## 0.3.1
+
+Spacing fixes and accessibility. Default look is unchanged except for the two
+bug fixes marked below.
+
+### Fixed
+- **`card` / `section` now honor `style.padding`.** Previously only
+  `paddingHorizontal` / `paddingVertical` worked; `padding` was silently
+  ignored. Cards that set `padding` will now render with that value.
+- **Blank `text` children are no longer rendered** inside `column`, `row`,
+  `card` and `section`. An empty `text` still reserved one line of height plus
+  the surrounding `gap`s (≈30px of dead space each).
+- Checkbox / switch now announce their label to screen readers; tappable chips
+  are exposed as buttons.
+
+### Added
+- `props.titleGap` on `card` / `section` — title→content gap independent of
+  `style.gap` (falls back to `style.gap`, then 10, so existing JSON is unchanged).
+- `props.paddingTop` on `heading` (default stays 4).
+
+### Chore
+- Clear all analyzer infos in `test/` and `example/`; add `spacing_fixes_test.dart`.
+
 ## 0.3.0
 
 Full-page dynamic detail pages — `chip` + `list` components.
