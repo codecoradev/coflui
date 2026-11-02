@@ -43,8 +43,9 @@ class DisplayBuilders {
     ));
     final body =
         (c.value?.toString().isNotEmpty == true ? c.value : c.label) ?? '';
+    final top = c.props['paddingTop'];
     return Padding(
-      padding: const EdgeInsets.only(top: 4),
+      padding: EdgeInsets.only(top: top is num ? top.toDouble() : 4),
       child: Align(
         alignment: StyleResolver.align(merged),
         child: CofluiText(
@@ -90,11 +91,17 @@ class DisplayBuilders {
     // the tap to the controller (same convention as button / list_tile).
     final action = props['action']?.toString();
     if (action != null) {
-      return MouseRegion(
-        cursor: SystemMouseCursors.click,
-        child: GestureDetector(
-          onTap: () => controller.onAction(action, c.id),
-          child: chip,
+      return Semantics(
+        button: true,
+        label: label,
+        excludeSemantics: true,
+        onTap: () => controller.onAction(action, c.id),
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: GestureDetector(
+            onTap: () => controller.onAction(action, c.id),
+            child: chip,
+          ),
         ),
       );
     }

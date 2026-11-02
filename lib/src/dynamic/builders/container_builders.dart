@@ -22,9 +22,7 @@ class ContainerBuilders {
   /// views; override with `props.mainAxisSize: "max"`.
   static Widget column(BuildContext ctx, UIComponent c, controller) {
     final s = c.style;
-    final children = c.children
-        .map((child) => DynamicUIWidget(child, controller: controller))
-        .toList();
+    final children = _renderChildren(c, controller);
     // Default min: di dalam scrollview constraint heightnya unbounded;
     // Column(mainAxisSize.max) di situ tidak bisa menentukan tingginya dan
     // menyebabkan cascade layout error (terutama bila child Row stretch).
@@ -61,7 +59,7 @@ class ContainerBuilders {
     // terbatas (bounded).
     //   - `props.flex` (int > 0) → Expanded (mengisi porsi persis).
     //   - tanpa flex            → Flexible loose (konten-sized, bounded).
-    final children = c.children.map((child) {
+    final children = c.children.where(_isRenderable).map((child) {
       final flex = child.props['flex'];
       final inner = DynamicUIWidget(child, controller: controller);
       if (flex is int && flex > 0) {
@@ -127,9 +125,9 @@ class ContainerBuilders {
   /// column inside the card body.
   static Widget card(BuildContext ctx, UIComponent c, controller) {
     final s = c.style;
-    final children = c.children
-        .map((child) => DynamicUIWidget(child, controller: controller))
-        .toList();
+    final children = _renderChildren(c, controller);
+    final padH = s.paddingHorizontal ?? s.padding ?? 14;
+    final padV = s.paddingVertical ?? s.padding ?? 14;
     final content = Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -139,13 +137,10 @@ class ContainerBuilders {
 
     return CofluiCard(
       title: c.label?.isNotEmpty == true ? c.label : null,
-      titleGap: s.gap ?? 10,
-      padding: StyleResolver.padding(const UIStyle(padding: 14)).copyWith(
-        left: s.paddingHorizontal ?? 14,
-        right: s.paddingHorizontal ?? 14,
-        top: s.paddingVertical ?? 14,
-        bottom: s.paddingVertical ?? 14,
-      ),
+      // `props.titleGap` sets the title→content gap on its own; without it
+      // `style.gap` still applies (backwards compatible), then 10.
+      titleGap: _toDouble(c.props['titleGap']) ?? s.gap ?? 10,
+      padding: EdgeInsets.symmetric(horizontal: padH, vertical: padV),
       radius: StyleResolver.radius(s, 14),
       color: s.bgColor ?? CofluiColors.surface,
       borderColor: s.borderColor ?? const Color(0xFFEDEFF3),
@@ -164,6 +159,25 @@ class ContainerBuilders {
   /// beberapa form. Mirip `card` tapi lebih bold.
   static Widget section(BuildContext ctx, UIComponent c, controller) =>
       card(ctx, c, controller);
+
+  /// Renders [c]'s children, skipping blank placeholders (see [_isRenderable]).
+  static List<Widget> _renderChildren(UIComponent c, controller) => c.children
+      .where(_isRenderable)
+      .map((child) => DynamicUIWidget(child, controller: controller))
+      .toList();
+
+  /// An empty `text` (no value, no label, no padding) paints nothing but still
+  /// occupies one line of height plus the surrounding `gap`s, so it is skipped.
+  /// A blank `text` that sets `padding`/`paddingVertical` is an intentional
+  /// spacer and is kept.
+  static bool _isRenderable(UIComponent child) {
+    if (child.type != UIType.text) return true;
+    final blank = (child.value?.toString().isEmpty ?? true) &&
+        (child.label?.isEmpty ?? true);
+    final spacer =
+        child.style.padding != null || child.style.paddingVertical != null;
+    return !(blank && !spacer);
+  }
 
   static Widget _maybeExpand(Widget child, UIStyle s) {
     if (s.expand == true) return Expanded(child: child);
